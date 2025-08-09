@@ -14,6 +14,8 @@ const registerRouter = require('./routes/register');
 const editRouter = require('./routes/edit');
 const groupsRouter = require('./routes/groups');
 const photosRouter = require('./routes/photos');
+const appsRoutes = require('./routes/apps'); // Добавьте этот импорт
+const eventsRoutes = require('./routes/events'); // Добавьте этот импорт
 
 const app = express();
 
@@ -53,6 +55,8 @@ app.use('/register', registerRouter);
 app.use('/edit', editRouter);
 app.use('/groups', groupsRouter);
 app.use('/photos', photosRouter);
+app.use('/apps', appsRoutes);
+app.use('/events', eventsRoutes);
 
 // Запуск сервера
 const PORT = process.env.PORT || 3000;
@@ -69,4 +73,15 @@ app.listen(PORT, async () => {
   } catch (error) {
     console.error('Unable to start server:', error);
   }
+});
+
+// Обработка 404 ошибок
+app.use((req, res, next) => {
+  res.status(404).send('Страница не найдена');
+});
+
+// Обработка ошибок
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Ошибка сервера');
 });

@@ -175,14 +175,12 @@
                 <div class="vk-friends-box">
                     <h3>Друзья <%= user.firstName %></h3>
                     <div class="vk-friends-list">
-                        <div class="vk-friend-item">
-                            <div class="vk-friend-avatar"></div>
-                            <div class="vk-friend-name">Анна Иванова</div>
-                        </div>
-                        <div class="vk-friend-item">
-                            <div class="vk-friend-avatar"></div>
-                            <div class="vk-friend-name">Петр Сидоров</div>
-                        </div>
+						<% friends.forEach(friend => { %>
+						  <div class="friend">
+							<img src="<%= friend.avatar || '/images/default-avatar.jpg' %>" alt="<%= friend.name %>">
+							<span><%= friend.name %></span>
+						  </div>
+						<% }); %>
                         <div class="vk-friends-more">
                             <a href="/profile/<%= user.id %>/friends">Все друзья</a>
                         </div>
