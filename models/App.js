@@ -11,17 +11,26 @@ const App = sequelize.define('App', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: true
-  },
-  url: {
+  apiKey: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false,
+    unique: true
   },
-  userId: {
-    type: DataTypes.INTEGER,
+  apiSecret: {
+    type: DataTypes.STRING,
     allowNull: false
+  },
+  permissions: {
+    type: DataTypes.JSON,
+    defaultValue: []
+  },
+  isActive: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true
+  },
+  lastUsed: {
+    type: DataTypes.INTEGER,
+    allowNull: true
   }
 }, {
   tableName: 'apps',

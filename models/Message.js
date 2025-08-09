@@ -1,106 +1,67 @@
-const { Model, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-module.exports = (sequelize, DataTypes) => {
-  class Message extends Model {
-    static associate(models) {
-      Message.belongsTo(models.User, { 
-        foreignKey: 'userId', 
-        as: 'author'
-      });
-      
-      Message.belongsTo(models.User, { 
-        foreignKey: 'addresseeId', 
-        as: 'addressee'
-      });
-      
-      Message.hasMany(models.Message, { 
-        foreignKey: 'parentId', 
-        as: 'replies'
-      });
-      
-      Message.belongsTo(models.Message, { 
-        foreignKey: 'parentId', 
-        as: 'parent'
-      });
-      
-      Message.hasMany(models.Like, { 
-        foreignKey: 'messageId', 
-        as: 'likes'  // Убедимся, что псевдоним 'likes'
-      });
+const Message = sequelize.define('Message', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  content: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'users',
+      key: 'id'
     }
+  },
+  deleted: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  parentId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: null
+  },
+  visibility: {
+    type: DataTypes.ENUM('public', 'private', 'friends'),
+    defaultValue: 'public'
+  },
+  postTime: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
   }
+}, {
+  tableName: 'messages',
+  timestamps: true
+});
 
-  Message.init({
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Users',
-        key: 'id'
-      }
-    },
-    addresseeId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Users',
-        key: 'id'
-      }
-    },
-    parentId: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'Messages',
-        key: 'id'
-      }
-    },
-    postTime: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW
-    },
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    deleted: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0
-    },
-    isPrivate: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
-    },
-    mentions: {
-      type: DataTypes.TEXT,
-      get() {
-        const rawValue = this.getDataValue('mentions');
-        return rawValue ? JSON.parse(rawValue) : [];
-      },
-      set(value) {
-        this.setDataValue('mentions', JSON.stringify(value));
-      }
-    },
-    hashtags: {
-      type: DataTypes.TEXT,
-      get() {
-        const rawValue = this.getDataValue('hashtags');
-        return rawValue ? JSON.parse(rawValue) : [];
-      },
-      set(value) {
-        this.setDataValue('hashtags', JSON.stringify(value));
-      }
-    },
-    visibility: {
-      type: DataTypes.ENUM('public', 'friends', 'private'),
-      defaultValue: 'public'
-    }
-  }, {
-    sequelize,
-    modelName: 'Message',
-    tableName: 'Messages',
-    timestamps: true
+// Define associations
+Message.associate = (models) => {
+  Message.belongsTo(models.User, {
+    foreignKey: 'userId',
+    as: 'author'
   });
-
-  return Message;
+  
+  Message.hasMany(models.Like, {
+    foreignKey: 'messageId',
+    as: 'likes'
+  });
+  
+  Message.hasMany(Message, {
+    foreignKey: 'parentId',
+    as: 'replies'
+  });
+  
+  Message.belongsTo(Message, {
+    foreignKey: 'parentId',
+    as: 'parent'
+  });
 };
+
+module.exports = Message;

@@ -4,9 +4,9 @@ const profileController = require('../controllers/profileController');
 const auth = require('../middleware/auth');
 
 // Получить профиль пользователя
-router.get('/', auth, profileController.getProfile);
+router.get('/', auth.ensureAuthenticated, profileController.getProfile);
 
 // Обновить профиль
-router.put('/', auth, profileController.updateProfile);
+router.put('/', auth.ensureAuthenticated, profileController.updateProfile);
 
 module.exports = router;
