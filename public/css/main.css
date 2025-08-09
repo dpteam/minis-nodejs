@@ -978,3 +978,32 @@ textarea.vk-form-control {
 .vk-footer-bottom i {
     color: #FF6B6B;
 }
+
+/* VK 2008 Feed Selector */
+.vk-feed-selector {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #E8EBEE;
+}
+
+.vk-feed-type {
+    padding: 8px 12px;
+    color: #2B587A;
+    text-decoration: none;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+}
+
+.vk-feed-type:hover {
+    background: #F5F7FA;
+}
+
+.vk-feed-type.vk-active {
+    border-bottom-color: #45668E;
+    color: #45668E;
+    font-weight: bold;
+}

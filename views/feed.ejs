@@ -1,0 +1,151 @@
+<div class="vk-content-box">
+    <h2><i class="fas fa-newspaper"></i> Моя лента</h2>
+    
+    <!-- Post Form -->
+    <%if (user) { %>
+    <form action="/posts" method="POST" class="vk-post-form">
+        <div class="vk-form-group">
+            <textarea name="content" class="vk-form-control" placeholder="Что у вас нового?" required><%=typeof postContent !=='undefined'? postContent :''%></textarea>
+        </div>
+        <button type="submit" class="vk-btn">
+            <i class="fas fa-paper-plane"></i> Опубликовать
+        </button>
+    </form>
+    <hr style="margin: 15px 0; border: none; border-top: 1px solid #E8EBEE;">
+    <% } %>
+
+    <!-- Feed Type Selector -->
+    <div class="vk-feed-selector">
+        <a href="/feed?type=all" class="vk-feed-type <%= feedType === 'all' ? 'vk-active' : '' %>">
+            <i class="fas fa-globe"></i> Все
+        </a>
+        <a href="/feed?type=friends" class="vk-feed-type <%= feedType === 'friends' ? 'vk-active' : '' %>">
+            <i class="fas fa-user-friends"></i> Друзья
+        </a>
+        <a href="/feed?type=groups" class="vk-feed-type <%= feedType === 'groups' ? 'vk-active' : '' %>">
+            <i class="fas fa-users"></i> Группы
+        </a>
+    </div>
+
+    <!-- Posts -->
+    <div class="vk-posts">
+        <% if (feed && feed.rows && feed.rows.length > 0) { %>
+            <% feed.rows.forEach(post => { %>
+            <div class="vk-post">
+                <div class="vk-post-header">
+                    <div class="vk-post-avatar">
+                        <%if (post.author && post.author.avatar) { %>
+                            <img src="<%= post.author.avatar %>" alt="<%= post.author.firstName %> <%= post.author.lastName %>" style="width: 32px; height: 32px; border-radius: 2px; object-fit: cover;">
+                        <% } else { %>
+                            <i class="fas fa-user"></i>
+                        <% } %>
+                    </div>
+                    <div>
+                        <a href="/profile/<%= post.author.id %>" class="vk-post-author"><%= post.author.firstName %><%= post.author.lastName %></a>
+                        <span class="vk-post-time"><%= post.createdAt || post.postTime %></span>
+                    </div>
+                </div>
+                <div class="vk-post-content">
+                    <%= post.content %>
+                </div>
+                <div class="vk-post-actions">
+                    <a href="#" onclick="likePost(<%= post.id %>)">
+                        <i class="fas fa-thumbs-up"></i> Мне нравится <% if (post.likes && post.likes.length > 0) { %>(<%= post.likes.length %>)<% } %>
+                    </a>
+                    <a href="#" onclick="showComments(<%= post.id %>)">
+                        <i class="fas fa-comment"></i> Комментарии <% if (post.comments && post.comments.length > 0) { %>(<%= post.comments.length %>)<% } %>
+                    </a>
+                    <a href="#" onclick="sharePost(<%= post.id %>)">
+                        <i class="fas fa-share"></i> Поделиться
+                    </a>
+                    <%if (user && user.id === post.userId) { %>
+                    <a href="#" onclick="deletePost(<%= post.id %>)">
+                        <i class="fas fa-trash"></i> Удалить
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+            <% }); %>
+        <% } else { %>
+        <div class="vk-empty-state">
+            <i class="fas fa-newspaper"></i>
+            <p>Нет записей</p>
+        </div>
+        <% } %>
+    </div>
+    
+    <!-- Pagination -->
+    <% if (totalPages > 1) { %>
+    <div class="vk-pagination">
+        <% if (currentPage > 1) { %>
+            <a href="/feed?page=<%= currentPage - 1 %>&type=<%= feedType %>" class="vk-btn vk-btn-secondary">
+                <i class="fas fa-chevron-left"></i> Назад
+            </a>
+        <% } %>
+        
+        <span class="vk-pagination-info">
+            Страница <%= currentPage %> из <%= totalPages %>
+        </span>
+        
+        <% if (currentPage < totalPages) { %>
+            <a href="/feed?page=<%= currentPage + 1 %>&type=<%= feedType %>" class="vk-btn">
+                Вперед <i class="fas fa-chevron-right"></i>
+            </a>
+        <% } %>
+    </div>
+    <% } %>
+</div>
+
+<script>
+function likePost(postId) {
+    fetch(`/posts/${postId}/like`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    });
+}
+
+function showComments(postId) {
+    const commentsSection = document.querySelector(`#comments-${postId}`);
+    if (commentsSection) {
+        commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+function sharePost(postId) {
+    if (navigator.share) {
+        navigator.share({
+            title: 'Поделиться записью',
+            url: window.location.origin + '/posts/' + postId
+        });
+    } else {
+        navigator.clipboard.writeText(window.location.origin + '/posts/' + postId);
+        alert('Ссылка скопирована в буфер обмена');
+    }
+}
+
+function deletePost(postId) {
+    if (confirm('Вы уверены, что хотите удалить эту запись?')) {
+        fetch(`/posts/${postId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+</script>
