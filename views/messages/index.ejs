@@ -1,0 +1,109 @@
+<div class="messages-container">
+    <div class="messages-header">
+        <h1>Messages</h1>
+        <div class="message-actions">
+            <button class="btn btn-primary" onclick="showNewMessageForm()">
+                New Message
+            </button>
+            <div class="filter-dropdown">
+                <button class="btn btn-outline" onclick="toggleFilterMenu()">
+                    Filter ▼
+                </button>
+                <div class="filter-menu" id="filterMenu">
+                    <a href="#" onclick="filterMessages('all')">All Messages</a>
+                    <a href="#" onclick="filterMessages('following')">Following</a>
+                    <a href="#" onclick="filterMessages('mentions')">Mentions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Форма создания нового сообщения -->
+    <div class="new-message-form" id="newMessageForm" style="display: none;">
+        <form onsubmit="createMessage(event)">
+            <div class="form-group">
+                <textarea name="content" 
+                          class="form-control" 
+                          placeholder="What's on your mind?" 
+                          rows="3"
+                          required></textarea>
+                <div class="message-options">
+                    <div class="option-group">
+                        <label for="messageVisibility">Visibility:</label>
+                        <select name="visibility" id="messageVisibility" class="form-control">
+                            <option value="public">Public</option>
+                            <option value="friends">Friends Only</option>
+                            <option value="private">Private</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="messageAddressee">Address to:</label>
+                        <input type="text" 
+                               id="messageAddressee" 
+                               name="addresseeId" 
+                               class="form-control" 
+                               placeholder="Search users..."
+                               onkeyup="searchUsers(this.value)">
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Post Message</button>
+                <button type="button" class="btn btn-outline" onclick="hideNewMessageForm()">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Список сообщений -->
+    <div class="messages-list">
+        <% if (messages && messages.length > 0) { %>
+        <% messages.forEach(message => { %>
+        <%- include('../partials/message-card', { message, user }) %>
+        <% }); %>
+        
+        <%- include('../partials/pagination', { 
+            baseUrl: '/messages', 
+            currentPage, 
+            totalPages,
+            queryParams: ''
+        }) %>
+        <% } else { %>
+        <div class="empty-state">
+            <h3>No messages yet</h3>
+            <p>Be the first to share something with the community!</p>
+            <button class="btn btn-primary" onclick="showNewMessageForm()">
+                Create Message
+            </button>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<!-- Модальное окно для приватных сообщений -->
+<div id="privateMessageModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Send Message</h3>
+            <button class="close-btn" onclick="closeModal('privateMessageModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form onsubmit="sendPrivateMessage(event)">
+                <div class="form-group">
+                    <label for="privateMessageContent">Message</label>
+                    <textarea id="privateMessageContent" 
+                              class="form-control" 
+                              rows="4" 
+                              required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('privateMessageModal')">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,160 @@
+<div class="profile-container">
+    <div class="profile-header">
+        <div class="profile-cover">
+            <div class="profile-cover-overlay"></div>
+        </div>
+        
+        <div class="profile-info">
+            <div class="profile-avatar-section">
+                <img src="<%= profileUser.avatar || '/images/default-avatar.png' %>" 
+                     alt="<%= profileUser.firstName %> <%= profileUser.lastName %>" 
+                     class="profile-avatar">
+                <% if (isOwnProfile) { %>
+                <button class="avatar-upload-btn" onclick="document.getElementById('avatarInput').click()">
+                    📷 Change Photo
+                </button>
+                <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="uploadAvatar(this)">
+                <% } %>
+            </div>
+            
+            <div class="profile-details">
+                <h1 class="profile-name">
+                    <%= profileUser.firstName %> <%= profileUser.lastName %>
+                    <% if (profileUser.emailPublic) { %>
+                    <span class="profile-email">&lt;<%= profileUser.email %>&gt;</span>
+                    <% } %>
+                </h1>
+                
+                <% if (profileUser.bio) { %>
+                <p class="profile-bio"><%= profileUser.bio %></p>
+                <% } %>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <strong class="stat-number"><%= messageCount %></strong>
+                        <span class="stat-label">Messages</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong class="stat-number"><%= friendCount %></strong>
+                        <span class="stat-label">Friends</span>
+                    </div>
+                    <div class="stat-item">
+                        <strong class="stat-number">
+                            <%= formatDate(profileUser.registrationTime, 'MMMM YYYY') %>
+                        </strong>
+                        <span class="stat-label">Joined</span>
+                    </div>
+                </div>
+                
+                <% if (!isOwnProfile && user) { %>
+                <div class="profile-actions">
+                    <% if (friendshipStatus === 'accepted') { %>
+                    <button class="btn btn-outline" onclick="removeFriend(<%= profileUser.id %>)">
+                        Remove Friend
+                    </button>
+                    <% } else if (friendshipStatus === 'pending') { %>
+                    <button class="btn btn-outline" disabled>
+                        Friend Request Sent
+                    </button>
+                    <% } else if (friendshipStatus === 'received') { %>
+                    <button class="btn btn-primary" onclick="acceptFriend(<%= profileUser.id %>)">
+                        Accept Friend
+                    </button>
+                    <button class="btn btn-outline" onclick="rejectFriend(<%= profileUser.id %>)">
+                        Reject
+                    </button>
+                    <% } else { %>
+                    <button class="btn btn-primary" onclick="addFriend(<%= profileUser.id %>)">
+                        Add Friend
+                    </button>
+                    <% } %>
+                    
+                    <button class="btn btn-outline" onclick="sendMessage(<%= profileUser.id %>)">
+                        Message
+                    </button>
+                </div>
+                <% } else if (isOwnProfile) { %>
+                <div class="profile-actions">
+                    <a href="/edit-profile" class="btn btn-primary">Edit Profile</a>
+                    <a href="/settings" class="btn btn-outline">Settings</a>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    
+    <div class="profile-content">
+        <div class="profile-tabs">
+            <button class="tab-btn active" onclick="showTab('messages')">
+                Messages (<%= profileUser.messages ? profileUser.messages.length : 0 %>)
+            </button>
+            <button class="tab-btn" onclick="showTab('friends')">
+                Friends
+            </button>
+            <button class="tab-btn" onclick="showTab('about')">
+                About
+            </button>
+        </div>
+        
+        <div class="tab-content">
+            <div id="messages-tab" class="tab-pane active">
+                <% if (profileUser.messages && profileUser.messages.length > 0) { %>
+                <div class="messages-grid">
+                    <% profileUser.messages.forEach(message => { %>
+                    <%- include('../partials/message-card', { message, user }) %>
+                    <% }); %>
+                </div>
+                <% } else { %>
+                <div class="empty-state">
+                    <p>No messages yet.</p>
+                    <% if (isOwnProfile) { %>
+                    <a href="/messages" class="btn btn-primary">Create your first message</a>
+                    <% } %>
+                </div>
+                <% } %>
+            </div>
+            
+            <div id="friends-tab" class="tab-pane" style="display: none;">
+                <div class="friends-grid">
+                    <!-- Друзья загружаются через JavaScript -->
+                </div>
+            </div>
+            
+            <div id="about-tab" class="tab-pane" style="display: none;">
+                <div class="about-section">
+                    <h3>About</h3>
+                    <% if (profileUser.bio) { %>
+                    <p><%= profileUser.bio %></p>
+                    <% } else { %>
+                    <p>No bio available.</p>
+                    <% } %>
+                    
+                    <div class="about-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Email:</span>
+                            <span class="detail-value">
+                                <% if (profileUser.emailPublic) { %>
+                                <%= profileUser.email %>
+                                <% } else { %>
+                                Private
+                                <% } %>
+                            </span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Member since:</span>
+                            <span class="detail-value">
+                                <%= formatDate(profileUser.registrationTime, 'MMMM D, YYYY') %>
+                            </span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Last active:</span>
+                            <span class="detail-value">
+                                <%= formatRelativeTime(profileUser.lastActivityTime) %>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

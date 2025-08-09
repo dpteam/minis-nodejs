@@ -1,0 +1,49 @@
+{
+  "name": "minis-nodejs",
+  "version": "1.0.0",
+  "description": "A minimalist social network made with Node.js and SQLite",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "jest",
+    "migrate": "sequelize-cli db:migrate",
+    "seed": "sequelize-cli db:seed:all",
+    "setup": "npm install && sequelize-cli db:migrate && sequelize-cli db:seed:all"
+  },
+  "keywords": [
+    "social-network",
+    "nodejs",
+    "express",
+    "sqlite",
+    "mariadb",
+    "minimal"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.2.1",
+    "jsonwebtoken": "^9.0.0",
+    "multer": "^1.4.5-lts.1",
+    "sequelize": "^6.31.1",
+    "sqlite3": "^5.1.6",
+    "validator": "^13.9.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "nodemon": "^3.1.10",
+    "sequelize-cli": "^6.6.0",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

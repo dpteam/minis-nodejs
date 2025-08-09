@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Minis</title>
+    <meta name="description" content="A minimalist social network">
+    
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="/css/auth.css">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-brand">
+                    <span class="brand-icon">🎭</span>
+                    <span class="brand-name">Minis</span>
+                </div>
+                <h1><%= title %></h1>
+                <p class="auth-subtitle"><%= subtitle || '' %></p>
+            </div>
+            
+            <% if (messages.success) { %>
+            <div class="alert alert-success">
+                <%= messages.success %>
+            </div>
+            <% } %>
+            
+            <% if (messages.error) { %>
+            <div class="alert alert-error">
+                <%= messages.error %>
+            </div>
+            <% } %>
+            
+            <% if (errors && errors.length > 0) { %>
+            <div class="alert alert-error">
+                <ul class="error-list">
+                    <% errors.forEach(error => { %>
+                    <li><%= error.msg %></li>
+                    <% }); %>
+                </ul>
+            </div>
+            <% } %>
+
+            <%= body %>
+            
+            <div class="auth-footer">
+                <% if (title === 'Login') { %>
+                <p>Don't have an account? <a href="/register">Register here</a></p>
+                <p><a href="/forgot-password">Forgot password?</a></p>
+                <% } else { %>
+                <p>Already have an account? <a href="/login">Login here</a></p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/forms.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<header class="page-header">
+    <div class="header-container">
+        <div class="header-content">
+            <h1 class="page-title"><%= title %></h1>
+            <% if (subtitle) { %>
+            <p class="page-subtitle"><%= subtitle %></p>
+            <% } %>
+        </div>
+        
+        <% if (actions) { %>
+        <div class="header-actions">
+            <% actions.forEach(action => { %>
+            <a href="<%= action.href %>" class="btn <%= action.class || 'btn-primary' %>">
+                <%= action.text %>
+            </a>
+            <% }); %>
+        </div>
+        <% } %>
+    </div>
+</header>

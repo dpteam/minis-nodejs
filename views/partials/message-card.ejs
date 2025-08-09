@@ -1,0 +1,118 @@
+<div class="message-card" data-message-id="<%= message.id %>">
+    <div class="message-header">
+        <div class="message-author">
+            <img src="<%= message.author.avatar || '/images/default-avatar.png' %>" 
+                 alt="<%= message.author.firstName %> <%= message.author.lastName %>" 
+                 class="author-avatar">
+            <div class="author-info">
+                <a href="/profile/<%= message.author.id %>" class="author-name">
+                    <%= message.author.firstName %> <%= message.author.lastName %>
+                </a>
+                <span class="message-time">
+                    <%= formatRelativeTime(message.postTime) %>
+                </span>
+            </div>
+        </div>
+        
+        <% if (message.addressee) { %>
+        <div class="message-addressee">
+            <span class="addressee-label">to</span>
+            <a href="/profile/<%= message.addressee.id %>" class="addressee-name">
+                <%= message.addressee.firstName %> <%= message.addressee.lastName %>
+            </a>
+        </div>
+        <% } %>
+        
+        <div class="message-actions">
+            <% if (user && user.id === message.userId) { %>
+            <button class="action-btn delete-btn" onclick="deleteMessage(<%= message.id %>)" title="Delete">
+                🗑️
+            </button>
+            <% } %>
+            
+            <% if (user && user.id !== message.userId) { %>
+            <button class="action-btn like-btn <%= message.userLiked ? 'liked' : '' %>" 
+                    onclick="toggleLike(<%= message.id %>)" title="Like">
+                <%= message.userLiked ? '❤️' : '🤍' %>
+                <span class="like-count"><%= message.likesCount || 0 %></span>
+            </button>
+            <% } %>
+        </div>
+    </div>
+    
+    <div class="message-content">
+        <%= formatMessage(message.content) %>
+    </div>
+    
+    <% if (message.mentions && message.mentions.length > 0) { %>
+    <div class="message-mentions">
+        <span class="mentions-label">Mentions:</span>
+        <% message.mentions.forEach(mention => { %>
+        <a href="/profile/<%= mention %>" class="mention-tag">@<%= mention %></a>
+        <% }); %>
+    </div>
+    <% } %>
+    
+    <% if (message.hashtags && message.hashtags.length > 0) { %>
+    <div class="message-hashtags">
+        <span class="hashtags-label">Hashtags:</span>
+        <% message.hashtags.forEach(hashtag => { %>
+        <a href="/hashtag/<%= hashtag %>" class="hashtag-tag">#<%= hashtag %></a>
+        <% }); %>
+    </div>
+    <% } %>
+    
+    <div class="message-footer">
+        <button class="reply-btn" onclick="showReplyForm(<%= message.id %>)">
+            💬 Reply
+        </button>
+        
+        <button class="share-btn" onclick="shareMessage(<%= message.id %>)">
+            📤 Share
+        </button>
+        
+        <span class="message-visibility">
+            <%= formatMessageVisibility(message.visibility) %>
+        </span>
+    </div>
+    
+    <!-- Форма ответа (скрыта по умолчанию) -->
+    <div class="reply-form" id="reply-form-<%= message.id %>" style="display: none;">
+        <form onsubmit="submitReply(event, <%= message.id %>)">
+            <textarea name="content" placeholder="Write a reply..." required></textarea>
+            <div class="reply-form-actions">
+                <button type="submit" class="btn btn-primary">Reply</button>
+                <button type="button" class="btn btn-outline" onclick="hideReplyForm(<%= message.id %>)">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Ответы на сообщение -->
+    <% if (message.replies && message.replies.length > 0) { %>
+    <div class="message-replies">
+        <h4>Replies (<%= message.replies.length %>)</h4>
+        <% message.replies.forEach(reply => { %>
+        <div class="reply-card">
+            <div class="reply-header">
+                <img src="<%= reply.author.avatar || '/images/default-avatar.png' %>" 
+                     alt="<%= reply.author.firstName %> <%= reply.author.lastName %>" 
+                     class="reply-author-avatar">
+                <div class="reply-author-info">
+                    <a href="/profile/<%= reply.author.id %>" class="reply-author-name">
+                        <%= reply.author.firstName %> <%= reply.author.lastName %>
+                    </a>
+                    <span class="reply-time">
+                        <%= formatRelativeTime(reply.postTime) %>
+                    </span>
+                </div>
+            </div>
+            <div class="reply-content">
+                <%= formatMessage(reply.content) %>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+    <% } %>
+</div>

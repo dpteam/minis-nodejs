@@ -1,0 +1,299 @@
+/* ===== Темная тема ===== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #818cf8;
+        --primary-dark: #6366f1;
+        --secondary-color: #94a3b8;
+        --success-color: #34d399;
+        --error-color: #f87171;
+        --warning-color: #fbbf24;
+        --background-color: #111827;
+        --surface-color: #1f2937;
+        --text-primary: #f9fafb;
+        --text-secondary: #9ca3af;
+        --border-color: #374151;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    }
+    
+    body {
+        background-color: var(--background-color);
+        color: var(--text-primary);
+    }
+    
+    .navbar {
+        background-color: rgba(17, 24, 39, 0.95);
+        border-bottom-color: var(--border-color);
+    }
+    
+    .nav-link {
+        color: var(--text-secondary);
+    }
+    
+    .nav-link:hover {
+        color: var(--primary-color);
+        background-color: var(--surface-color);
+    }
+    
+    .notification-menu,
+    .user-menu {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+    }
+    
+    .notification-item:hover,
+    .menu-item:hover {
+        background-color: var(--background-color);
+    }
+    
+    .btn-primary {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: var(--background-color);
+    }
+    
+    .btn-primary:hover {
+        background-color: var(--primary-dark);
+        border-color: var(--primary-dark);
+    }
+    
+    .btn-outline {
+        background-color: transparent;
+        color: var(--text-primary);
+        border-color: var(--border-color);
+    }
+    
+    .btn-outline:hover {
+        background-color: var(--surface-color);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+    
+    .form-control {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.1);
+    }
+    
+    .form-control::placeholder {
+        color: var(--text-secondary);
+    }
+    
+    .card,
+    .message-card {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+    }
+    
+    .card-header,
+    .card-footer,
+    .message-footer {
+        border-color: var(--border-color);
+    }
+    
+    .alert-success {
+        background-color: #064e3b;
+        border-color: #059669;
+        color: #6ee7b7;
+    }
+    
+    .alert-error {
+        background-color: #7f1d1d;
+        border-color: #dc2626;
+        color: #fca5a5;
+    }
+    
+    .alert-warning {
+        background-color: #78350f;
+        border-color: #d97706;
+        color: #fcd34d;
+    }
+    
+    .alert-info {
+        background-color: #1e3a8a;
+        border-color: #2563eb;
+        color: #93c5fd;
+    }
+    
+    .empty-state {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+    }
+    
+    .modal-content {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+    }
+    
+    .modal-header,
+    .modal-footer {
+        border-color: var(--border-color);
+    }
+    
+    .close-btn {
+        color: var(--text-secondary);
+    }
+    
+    .close-btn:hover {
+        background-color: var(--surface-color);
+        color: var(--text-primary);
+    }
+    
+    .pagination-link {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+        color: var(--text-primary);
+    }
+    
+    .pagination-link:hover {
+        background-color: var(--background-color);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+    
+    .pagination-link.active {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+        color: var(--background-color);
+    }
+    
+    .footer {
+        background-color: var(--surface-color);
+        border-top-color: var(--border-color);
+    }
+    
+    .auth-divider::before {
+        background-color: var(--border-color);
+    }
+    
+    .auth-divider span {
+        background-color: var(--surface-color);
+        color: var(--text-secondary);
+    }
+    
+    .message-mentions,
+    .message-hashtags {
+        background-color: var(--background-color);
+    }
+    
+    .mention-tag,
+    .hashtag-tag {
+        background-color: var(--surface-color);
+        color: var(--primary-color);
+    }
+    
+    .mention-tag:hover,
+    .hashtag-tag:hover {
+        background-color: var(--primary-color);
+        color: var(--background-color);
+    }
+    
+    .status-badge.active {
+        background-color: #064e3b;
+        color: #34d399;
+    }
+    
+    .status-badge.inactive {
+        background-color: #7f1d1d;
+        color: #f87171;
+    }
+    
+    .status-badge.deleted {
+        background-color: #78350f;
+        color: #fbbf24;
+    }
+    
+    .admin-table {
+        background-color: var(--surface-color);
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        border-color: var(--border-color);
+    }
+    
+    .admin-table tbody tr:hover {
+        background-color: var(--background-color);
+    }
+    
+    .stats-grid {
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+    }
+    
+    .action-card {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+    }
+    
+    /* Специальные стили для темной темы */
+    .text-primary {
+        color: var(--primary-color);
+    }
+    
+    .text-secondary {
+        color: var(--text-secondary);
+    }
+    
+    .bg-primary {
+        background-color: var(--primary-color);
+    }
+    
+    .bg-secondary {
+        background-color: var(--secondary-color);
+    }
+    
+    .border {
+        border-color: var(--border-color);
+    }
+    
+    .border-top,
+    .border-bottom,
+    .border-left,
+    .border-right {
+        border-color: var(--border-color);
+    }
+}
+
+/* Ручное включение темной темы через класс */
+body.dark-theme {
+    background-color: #111827;
+    color: #f9fafb;
+}
+
+body.dark-theme .navbar {
+    background-color: rgba(17, 24, 39, 0.95);
+    border-bottom-color: #374151;
+}
+
+body.dark-theme .form-control {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
+}
+
+body.dark-theme .card {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+body.dark-theme .btn-outline {
+    color: #f9fafb;
+    border-color: #374151;
+}
+
+body.dark-theme .btn-outline:hover {
+    background-color: #374151;
+    border-color: #818cf8;
+    color: #818cf8;
+}

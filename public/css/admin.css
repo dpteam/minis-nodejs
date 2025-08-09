@@ -1,0 +1,668 @@
+/* ===== Стили для админ панели ===== */
+.admin-dashboard {
+    padding: 2rem 0;
+}
+
+.admin-header {
+    margin-bottom: 3rem;
+}
+
+.admin-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.admin-header p {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+}
+
+/* ===== Статистика ===== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.stat-icon.users {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.stat-icon.active {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.stat-icon.messages {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+}
+
+.stat-icon.apps {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+}
+
+.stat-info h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.stat-info p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+/* ===== Секции админ панели ===== */
+.admin-section {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-section h2::before {
+    content: '';
+    width: 4px;
+    height: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+}
+
+/* ===== Таблицы ===== */
+.admin-table-container {
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--background-color);
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.admin-table th {
+    background-color: var(--surface-color);
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.admin-table td {
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+.admin-table tbody tr:hover {
+    background-color: var(--surface-color);
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Ячейки таблицы */
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.user-avatar-small {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.message-cell {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Действия в таблице */
+.table-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Статусные бейджи */
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.status-badge.active {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.status-badge.inactive {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.status-badge.deleted {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-badge.pending {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+/* Футер секции */
+.section-footer {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ===== Быстрые действия ===== */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.action-card {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    transition: var(--transition);
+}
+
+.action-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.action-card h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.action-card p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* ===== Формы админ панели ===== */
+.admin-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.admin-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* ===== Модальные окна админ панели ===== */
+.admin-modal .modal-content {
+    max-width: 600px;
+}
+
+.broadcast-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.broadcast-form textarea {
+    min-height: 120px;
+}
+
+/* ===== Специфичные элементы ===== */
+.filter-dropdown {
+    position: relative;
+}
+
+.filter-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    min-width: 200px;
+    z-index: 100;
+    display: none;
+}
+
+.filter-menu.active {
+    display: block;
+}
+
+.filter-menu a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.filter-menu a:hover {
+    background-color: var(--surface-color);
+    color: var(--primary-color);
+}
+
+/* ===== Кнопки админ панели ===== */
+.btn-admin {
+    background-color: #6366f1;
+    color: white;
+    border-color: #6366f1;
+}
+
+.btn-admin:hover {
+    background-color: #4f46e5;
+    border-color: #4f46e5;
+}
+
+.btn-export {
+    background-color: #059669;
+    color: white;
+    border-color: #059669;
+}
+
+.btn-export:hover {
+    background-color: #047857;
+    border-color: #047857;
+}
+
+.btn-maintenance {
+    background-color: #d97706;
+    color: white;
+    border-color: #d97706;
+}
+
+.btn-maintenance:hover {
+    background-color: #b45309;
+    border-color: #b45309;
+}
+
+/* ===== Адаптивность ===== */
+@media (max-width: 768px) {
+    .admin-dashboard {
+        padding: 1rem 0;
+    }
+    
+    .admin-header {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .admin-header h1 {
+        font-size: 2rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+    
+    .stat-info h3 {
+        font-size: 1.5rem;
+    }
+    
+    .admin-section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .admin-section h2 {
+        font-size: 1.25rem;
+    }
+    
+    .admin-table-container {
+        border-radius: var(--radius-sm);
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.75rem;
+    }
+    
+    .table-actions {
+        flex-direction: column;
+    }
+    
+    .table-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-footer {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .section-footer .btn {
+        width: 100%;
+    }
+    
+    .admin-form .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .filter-menu {
+        right: 1rem;
+        min-width: calc(100vw - 2rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-dashboard {
+        padding: 0.5rem 0;
+    }
+    
+    .stats-grid {
+        gap: 0.75rem;
+    }
+    
+    .stat-card {
+        padding: 0.75rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.125rem;
+    }
+    
+    .stat-info h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0;
+    }
+    
+    .admin-section {
+        padding: 0.75rem;
+    }
+    
+    .admin-table th,
+    .admin-table td {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.688rem;
+    }
+    
+    .user-cell {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .action-buttons .btn {
+        width: 100%;
+    }
+}
+
+/* ===== Анимации ===== */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-section {
+    animation: slideIn 0.5s ease-out;
+}
+
+.stat-card {
+    animation: slideIn 0.5s ease-out;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* ===== Темная тема для админ панели ===== */
+@media (prefers-color-scheme: dark) {
+    .stat-card {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+    }
+    
+    .admin-section {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+    }
+    
+    .admin-table {
+        background-color: var(--surface-color);
+    }
+    
+    .admin-table th {
+        background-color: var(--background-color);
+        border-color: var(--border-color);
+    }
+    
+    .admin-table td {
+        border-color: var(--border-color);
+    }
+    
+    .admin-table tbody tr:hover {
+        background-color: var(--background-color);
+    }
+    
+    .action-card {
+        background-color: var(--background-color);
+        border-color: var(--border-color);
+    }
+    
+    .filter-menu {
+        background-color: var(--surface-color);
+        border-color: var(--border-color);
+    }
+    
+    .filter-menu a:hover {
+        background-color: var(--background-color);
+    }
+    
+    .section-footer {
+        border-color: var(--border-color);
+    }
+    
+    .status-badge.active {
+        background-color: #064e3b;
+        color: #34d399;
+    }
+    
+    .status-badge.inactive {
+        background-color: #7f1d1d;
+        color: #f87171;
+    }
+    
+    .status-badge.deleted {
+        background-color: #78350f;
+        color: #fbbf24;
+    }
+    
+    .status-badge.pending {
+        background-color: #1e3a8a;
+        color: #60a5fa;
+    }
+}
+
+/* ===== Утилиты для админ панели ===== */
+.admin-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.admin-badge.success {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.admin-badge.error {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.admin-badge.warning {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.admin-badge.info {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.admin-loading {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.admin-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.admin-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--text-primary);
+    color: var(--background-color);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.admin-tooltip:hover::after {
+    opacity: 1;
+}

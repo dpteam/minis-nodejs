@@ -1,0 +1,223 @@
+<div class="admin-dashboard">
+    <div class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <p>Manage your Minis social network</p>
+    </div>
+    
+    <!-- Статистика -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon users">👥</div>
+            <div class="stat-info">
+                <h3><%= stats.totalUsers %></h3>
+                <p>Total Users</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon active">✅</div>
+            <div class="stat-info">
+                <h3><%= stats.activeUsers %></h3>
+                <p>Active Users</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon messages">💬</div>
+            <div class="stat-info">
+                <h3><%= stats.totalMessages %></h3>
+                <p>Total Messages</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon apps">📱</div>
+            <div class="stat-info">
+                <h3><%= stats.totalApps %></h3>
+                <p>Total Apps</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Последние пользователи -->
+    <div class="admin-section">
+        <h2>Recent Users</h2>
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Registered</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% recentUsers.forEach(user => { %>
+                    <tr>
+                        <td>
+                            <div class="user-cell">
+                                <img src="<%= user.avatar || '/images/default-avatar.png' %>" 
+                                     alt="<%= user.firstName %> <%= user.lastName %>" 
+                                     class="user-avatar-small">
+                                <span><%= user.firstName %> <%= user.lastName %></span>
+                            </div>
+                        </td>
+                        <td><%= user.email %></td>
+                        <td>
+                            <span class="status-badge <%= user.isActive ? 'active' : 'inactive' %>">
+                                <%= user.isActive ? 'Active' : 'Inactive' %>
+                            </span>
+                        </td>
+                        <td><%= formatDate(user.registrationTime, 'MMM DD, YYYY') %></td>
+                        <td>
+                            <div class="table-actions">
+                                <a href="/admin/users/<%= user.id %>" class="btn btn-sm btn-outline">View</a>
+                                <button class="btn btn-sm btn-outline" onclick="toggleUserStatus(<%= user.id %>)">
+                                    <%= user.isActive ? 'Disable' : 'Enable' %>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        <div class="section-footer">
+            <a href="/admin/users" class="btn btn-outline">View All Users</a>
+        </div>
+    </div>
+    
+    <!-- Последние сообщения -->
+    <div class="admin-section">
+        <h2>Recent Messages</h2>
+        <div class="admin-table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Content</th>
+                        <th>Author</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% recentMessages.forEach(message => { %>
+                    <tr>
+                        <td>
+                            <div class="message-cell">
+                                <%= truncateText(message.content, 100) %>
+                            </div>
+                        </td>
+                        <td>
+                            <%= message.author ? message.author.firstName + ' ' + message.author.lastName : 'Unknown' %>
+                        </td>
+                        <td><%= formatDate(message.postTime, 'MMM DD, YYYY HH:mm') %></td>
+                        <td>
+                            <span class="status-badge <%= message.deleted ? 'deleted' : 'active' %>">
+                                <%= message.deleted ? 'Deleted' : 'Active' %>
+                            </span>
+                        </td>
+                        <td>
+                            <div class="table-actions">
+                                <a href="/messages/<%= message.id %>" class="btn btn-sm btn-outline" target="_blank">View</a>
+                                <% if (!message.deleted) { %>
+                                <button class="btn btn-sm btn-danger" onclick="deleteMessage(<%= message.id %>)">
+                                    Delete
+                                </button>
+                                <% } %>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        <div class="section-footer">
+            <a href="/admin/messages" class="btn btn-outline">View All Messages</a>
+        </div>
+    </div>
+    
+    <!-- Быстрые действия -->
+    <div class="admin-section">
+        <h2>Quick Actions</h2>
+        <div class="quick-actions">
+            <div class="action-card">
+                <h3>📊 Export Data</h3>
+                <p>Export user data, messages, and other information</p>
+                <div class="action-buttons">
+                    <button class="btn btn-outline" onclick="exportData('json')">Export JSON</button>
+                    <button class="btn btn-outline" onclick="exportData('csv')">Export CSV</button>
+                </div>
+            </div>
+            
+            <div class="action-card">
+                <h3>🧹 System Maintenance</h3>
+                <p>Clean up old data and optimize performance</p>
+                <div class="action-buttons">
+                    <button class="btn btn-outline" onclick="cleanupNotifications()">Clean Notifications</button>
+                    <button class="btn btn-outline" onclick="clearCache()">Clear Cache</button>
+                </div>
+            </div>
+            
+            <div class="action-card">
+                <h3>📧 System Notifications</h3>
+                <p>Send notifications to all users</p>
+                <div class="action-buttons">
+                    <button class="btn btn-outline" onclick="showBroadcastModal()">Broadcast Message</button>
+                    <button class="btn btn-outline" onclick="testNotifications()">Test Notifications</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для рассылки -->
+<div id="broadcastModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Broadcast Message</h3>
+            <button class="close-btn" onclick="closeModal('broadcastModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form onsubmit="sendBroadcast(event)">
+                <div class="form-group">
+                    <label for="broadcastTitle">Title</label>
+                    <input type="text" id="broadcastTitle" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="broadcastMessage">Message</label>
+                    <textarea id="broadcastMessage" class="form-control" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Send to:</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="broadcastType" value="all" checked>
+                            <span class="radio-checkmark"></span>
+                            All Users
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="broadcastType" value="active">
+                            <span class="radio-checkmark"></span>
+                            Active Users Only
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="broadcastType" value="admins">
+                            <span class="radio-checkmark"></span>
+                            Admins Only
+                        </label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Send Broadcast</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal('broadcastModal')">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

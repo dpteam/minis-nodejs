@@ -1,0 +1,116 @@
+<div class="friends-container">
+    <div class="friends-header">
+        <h1>Friends</h1>
+        <div class="friends-actions">
+            <button class="btn btn-primary" onclick="showFindFriendsModal()">
+                Find Friends
+            </button>
+            <button class="btn btn-outline" onclick="showFriendRequests()">
+                Friend Requests (<%= friendRequests.length %>)
+            </button>
+        </div>
+    </div>
+    
+    <% if (friendRequests.length > 0) { %>
+    <div class="friend-requests-section">
+        <h2>Friend Requests</h2>
+        <div class="friend-requests-list">
+            <% friendRequests.forEach(request => { %>
+            <div class="friend-request-card">
+                <div class="request-info">
+                    <img src="<%= request.user.avatar || '/images/default-avatar.png' %>" 
+                         alt="<%= request.user.firstName %> <%= request.user.lastName %>" 
+                         class="request-avatar">
+                    <div class="request-details">
+                        <h3><%= request.user.firstName %> <%= request.user.lastName %></h3>
+                        <p>Sent <%= formatRelativeTime(request.createdAt) %></p>
+                    </div>
+                </div>
+                <div class="request-actions">
+                    <button class="btn btn-primary" onclick="acceptFriend(<%= request.userId %>)">
+                        Accept
+                    </button>
+                    <button class="btn btn-outline" onclick="rejectFriend(<%= request.userId %>)">
+                        Reject
+                    </button>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+    </div>
+    <% } %>
+    
+    <div class="friends-section">
+        <h2>All Friends (<%= friends.length %>)</h2>
+        
+        <% if (friends.length > 0) { %>
+        <div class="friends-grid">
+            <% friends.forEach(friend => { %>
+            <div class="friend-card">
+                <img src="<%= friend.avatar || '/images/default-avatar.png' %>" 
+                     alt="<%= friend.firstName %> <%= friend.lastName %>" 
+                     class="friend-avatar">
+                <div class="friend-info">
+                    <h3><%= friend.firstName %> <%= friend.lastName %></h3>
+                    <p class="friend-status">Online</p>
+                </div>
+                <div class="friend-actions">
+                    <button class="btn btn-outline" onclick="viewProfile(<%= friend.id %>)">
+                        View Profile
+                    </button>
+                    <button class="btn btn-outline" onclick="sendMessage(<%= friend.id %>)">
+                        Message
+                    </button>
+                    <button class="btn btn-outline danger" onclick="removeFriend(<%= friend.id %>)">
+                        Remove
+                    </button>
+                </div>
+            </div>
+            <% }); %>
+        </div>
+        
+        <%- include('../partials/pagination', { 
+            baseUrl: '/friends', 
+            currentPage, 
+            totalPages,
+            queryParams: ''
+        }) %>
+        <% } else { %>
+        <div class="empty-state">
+            <h3>No friends yet</h3>
+            <p>Start connecting with people to see them here.</p>
+            <button class="btn btn-primary" onclick="showFindFriendsModal()">
+                Find Friends
+            </button>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<!-- Модальное окно для поиска друзей -->
+<div id="findFriendsModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Find Friends</h3>
+            <button class="close-btn" onclick="closeModal('findFriendsModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="search-section">
+                <div class="search-form">
+                    <input type="text" 
+                           id="friendSearch" 
+                           class="form-control" 
+                           placeholder="Search by name or email..."
+                           onkeyup="searchFriends(this.value)">
+                    <button class="btn btn-primary" onclick="searchFriends(document.getElementById('friendSearch').value)">
+                        Search
+                    </button>
+                </div>
+            </div>
+            
+            <div class="search-results" id="friendSearchResults">
+                <p>Enter a name or email to search for friends</p>
+            </div>
+        </div>
+    </div>
+</div>

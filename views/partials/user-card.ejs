@@ -1,0 +1,70 @@
+<div class="user-card">
+    <div class="user-avatar-container">
+        <img src="<%= user.avatar || '/images/default-avatar.png' %>" 
+             alt="<%= user.firstName %> <%= user.lastName %>" 
+             class="user-avatar">
+        <% if (user.isActive) { %>
+        <span class="status-indicator online"></span>
+        <% } else { %>
+        <span class="status-indicator offline"></span>
+        <% } %>
+    </div>
+    
+    <div class="user-info">
+        <h3 class="user-name">
+            <a href="/profile/<%= user.id %>">
+                <%= user.firstName %> <%= user.lastName %>
+            </a>
+        </h3>
+        
+        <% if (user.bio) { %>
+        <p class="user-bio"><%= truncateText(user.bio, 100) %></p>
+        <% } %>
+        
+        <div class="user-stats">
+            <span class="stat">
+                <strong><%= messageCount || 0 %></strong> messages
+            </span>
+            <span class="stat">
+                <strong><%= friendCount || 0 %></strong> friends
+            </span>
+        </div>
+        
+        <div class="user-meta">
+            <span class="join-date">
+                Joined <%= formatDate(user.registrationTime, 'MMMM YYYY') %>
+            </span>
+        </div>
+    </div>
+    
+    <% if (currentUser && currentUser.id !== user.id) { %>
+    <div class="user-actions">
+        <% if (friendshipStatus === 'accepted') { %>
+        <button class="btn btn-outline" onclick="removeFriend(<%= user.id %>)">
+            Remove Friend
+        </button>
+        <% } else if (friendshipStatus === 'pending') { %>
+        <button class="btn btn-outline" disabled>
+            Friend Request Sent
+        </button>
+        <% } else if (friendshipStatus === 'received') { %>
+        <div class="friend-request-actions">
+            <button class="btn btn-primary" onclick="acceptFriend(<%= user.id %>)">
+                Accept
+            </button>
+            <button class="btn btn-outline" onclick="rejectFriend(<%= user.id %>)">
+                Reject
+            </button>
+        </div>
+        <% } else { %>
+        <button class="btn btn-primary" onclick="addFriend(<%= user.id %>)">
+            Add Friend
+        </button>
+        <% } %>
+        
+        <button class="btn btn-outline" onclick="sendMessage(<%= user.id %>)">
+            Message
+        </button>
+    </div>
+    <% } %>
+</div>

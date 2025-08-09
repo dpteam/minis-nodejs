@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Minis</title>
+    <meta name="description" content="A minimalist social network">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/responsive.css">
+    
+    <!-- Для темной темы -->
+    <% if (user && user.preferences && user.preferences.theme === 'dark') { %>
+    <link rel="stylesheet" href="/css/dark.css">
+    <% } %>
+    
+    <!-- Для админа -->
+    <% if (user && user.role === 'admin') { %>
+    <link rel="stylesheet" href="/css/admin.css">
+    <% } %>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/" class="brand-link">
+                    <span class="brand-icon">🎭</span>
+                    <span class="brand-name">Minis</span>
+                </a>
+            </div>
+            
+            <div class="nav-menu">
+                <% if (user) { %>
+                <a href="/feed" class="nav-link">Feed</a>
+                <a href="/messages" class="nav-link">Messages</a>
+                <a href="/friends" class="nav-link">Friends</a>
+                <% if (user.role === 'admin') { %>
+                <a href="/admin" class="nav-link admin-link">Admin</a>
+                <% } %>
+                <% } %>
+            </div>
+            
+            <div class="nav-actions">
+                <% if (user) { %>
+                <!-- Уведомления -->
+                <div class="notifications-dropdown">
+                    <button class="notification-btn" id="notificationBtn">
+                        <span class="notification-icon">🔔</span>
+                        <% if (unreadCount && unreadCount > 0) { %>
+                        <span class="notification-badge"><%= unreadCount %></span>
+                        <% } %>
+                    </button>
+                    <div class="notification-menu" id="notificationMenu">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <a href="/notifications" class="view-all">View all</a>
+                        </div>
+                        <div class="notification-list" id="notificationList">
+                            <!-- Уведомления загружаются через JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Профиль пользователя -->
+                <div class="user-dropdown">
+                    <button class="user-btn">
+                        <img src="<%= user.avatar || '/images/default-avatar.png' %>" alt="<%= user.firstName %>" class="user-avatar">
+                        <span class="user-name"><%= user.firstName %></span>
+                    </button>
+                    <div class="user-menu">
+                        <a href="/profile/<%= user.id %>" class="menu-item">My Profile</a>
+                        <a href="/edit-profile" class="menu-item">Edit Profile</a>
+                        <a href="/notifications" class="menu-item">Notifications</a>
+                        <a href="/settings" class="menu-item">Settings</a>
+                        <hr class="menu-divider">
+                        <a href="/logout" class="menu-item logout">Logout</a>
+                    </div>
+                </div>
+                <% } else { %>
+                <a href="/login" class="btn btn-outline">Login</a>
+                <a href="/register" class="btn btn-primary">Register</a>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <% if (messages.success) { %>
+        <div class="alert alert-success">
+            <%= messages.success %>
+        </div>
+        <% } %>
+        
+        <% if (messages.error) { %>
+        <div class="alert alert-error">
+            <%= messages.error %>
+        </div>
+        <% } %>
+
+        <%= body %>
+    </main>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Minis</h4>
+                <p>A minimalist social network made with Node.js</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/privacy">Privacy</a></li>
+                    <li><a href="/terms">Terms</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="https://github.com/yourusername/minis-nodejs">GitHub</a></li>
+                    <li><a href="/api/docs">API Docs</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; <%= new Date().getFullYear() %> Minis. Made with ❤️ using Node.js</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/js/main.js"></script>
+    <script src="/js/notifications.js"></script>
+    <script src="/js/forms.js"></script>
+    
+    <!-- Для страниц с сообщениями -->
+    <% if (typeof messages !== 'undefined' && messages.length > 0) { %>
+    <script src="/js/messages.js"></script>
+    <% } %>
+    
+    <!-- Для админ панели -->
+    <% if (user && user.role === 'admin') { %>
+    <script src="/js/admin.js"></script>
+    <% } %>
+    
+    <!-- WebSocket для реальных уведомлений -->
+    <% if (user) { %>
+    <script>
+        // WebSocket подключение
+        const socket = new WebSocket('ws://<%= req.headers.host %>/ws');
+        
+        socket.onopen = function() {
+            socket.send(JSON.stringify({
+                type: 'auth',
+                token: '<%= req.session.token %>'
+            }));
+        };
+        
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            handleWebSocketMessage(data);
+        };
+    </script>
+    <% } %>
+</body>
+</html>
