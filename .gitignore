@@ -138,5 +138,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# Minis related files
-database.sqlite
+# Minis related files and etc
+*.sqlite
+package-lock.json
