@@ -975,3 +975,329 @@ body {
     color: #999;
     font-size: 10px;
 }
+
+/* Стили для страницы редактирования профиля */
+.vk-edit-form {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    margin-bottom: 10px;
+}
+
+.vk-edit-form-header {
+    background-color: #edeff1;
+    border-bottom: 1px solid #d8dfea;
+    padding: 8px 10px;
+}
+
+.vk-edit-form-header h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+}
+
+.vk-form-group {
+    margin-bottom: 15px;
+    padding: 0 10px;
+}
+
+.vk-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: #45688e;
+}
+
+.vk-form-group input,
+.vk-form-group textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #d8dfea;
+    font-size: 11px;
+    font-family: 'Tahoma', 'Arial', sans-serif;
+}
+
+.vk-form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.vk-form-actions {
+    text-align: right;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-top: 1px solid #d8dfea;
+}
+
+.vk-form-actions button {
+    background-color: #4a76a8;
+    color: #fff;
+    border: none;
+    padding: 5px 15px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+/* Стили для страницы групп */
+.vk-create-group {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.vk-create-group h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.vk-create-group form {
+    display: flex;
+}
+
+.vk-create-group input {
+    flex: 1;
+    height: 22px;
+    border: 1px solid #d8dfea;
+    padding: 2px 5px;
+    font-size: 11px;
+}
+
+.vk-create-group button {
+    margin-left: 5px;
+    background-color: #4a76a8;
+    color: #fff;
+    border: none;
+    padding: 2px 10px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.vk-my-groups,
+.vk-popular-groups {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    margin-bottom: 10px;
+}
+
+.vk-my-groups h3,
+.vk-popular-groups h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    padding: 8px 10px;
+    background-color: #edeff1;
+    border-bottom: 1px solid #d8dfea;
+}
+
+.vk-groups-list {
+    padding: 10px;
+}
+
+.vk-group-item {
+    display: flex;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #edeff1;
+}
+
+.vk-group-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.vk-group-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.vk-group-info {
+    flex: 1;
+}
+
+.vk-group-name {
+    margin-bottom: 5px;
+}
+
+.vk-group-name a {
+    color: #2b587a;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.vk-group-description {
+    color: #777;
+    font-size: 10px;
+}
+
+.vk-no-groups {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+}
+
+/* Стили для страницы фотографий */
+.vk-upload-photos {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.vk-upload-photos h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.vk-upload-photos form {
+    display: flex;
+    align-items: center;
+}
+
+.vk-upload-photos input[type="file"] {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.vk-upload-photos button {
+    background-color: #4a76a8;
+    color: #fff;
+    border: none;
+    padding: 5px 15px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.vk-my-photos {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+}
+
+.vk-my-photos h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    padding: 8px 10px;
+    background-color: #edeff1;
+    border-bottom: 1px solid #d8dfea;
+}
+
+.vk-photos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.vk-photo-item {
+    aspect-ratio: 1/1;
+    background-color: #f7f7f7;
+    border: 1px solid #edeff1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vk-photo-placeholder {
+    text-align: center;
+    color: #777;
+    font-size: 10px;
+}
+
+/* Стили для страницы сообщений */
+.vk-new-message-form {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    margin-bottom: 10px;
+}
+
+.vk-new-message-header {
+    background-color: #edeff1;
+    border-bottom: 1px solid #d8dfea;
+    padding: 8px 10px;
+}
+
+.vk-new-message-header h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+}
+
+.vk-unread-messages,
+.vk-sent-messages {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+}
+
+.vk-unread-messages h3,
+.vk-sent-messages h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    padding: 8px 10px;
+    background-color: #edeff1;
+    border-bottom: 1px solid #d8dfea;
+}
+
+.vk-messages-list {
+    padding: 10px;
+}
+
+.vk-message-item {
+    display: flex;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #edeff1;
+}
+
+.vk-message-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.vk-message-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.vk-message-info {
+    flex: 1;
+}
+
+.vk-message-sender,
+.vk-message-receiver {
+    margin-bottom: 5px;
+}
+
+.vk-message-sender a,
+.vk-message-receiver a {
+    color: #2b587a;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.vk-message-content {
+    color: #000;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.vk-message-time {
+    color: #999;
+    font-size: 10px;
+}
+
+.vk-no-messages {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+}

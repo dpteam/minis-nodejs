@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | VK</title>
+    <link rel="stylesheet" href="/css/vk2008.css">
+</head>
+<body>
+    <div class="vk-container">
+        <!-- Верхняя панель -->
+        <div class="vk-header">
+            <div class="vk-logo">
+                <a href="/">vk</a>
+            </div>
+            <div class="vk-nav">
+                <ul>
+                    <li><a href="/">Моя Страница</a></li>
+                    <li><a href="/friends">Мои Друзья</a></li>
+                    <li><a href="/messages" class="active">Сообщения</a></li>
+                    <li><a href="/photos">Фотографии</a></li>
+                    <li><a href="/groups">Группы</a></li>
+                </ul>
+            </div>
+            <div class="vk-search">
+                <form action="/search" method="get">
+                    <input type="text" name="q" placeholder="Поиск">
+                </form>
+            </div>
+            <div class="vk-user-menu">
+                <a href="/profile/<%= user.id %>"><%= user.firstName %> <%= user.lastName %></a>
+                <a href="/logout">Выход</a>
+            </div>
+        </div>
+
+        <div class="vk-content-wrapper">
+            <!-- Левая колонка -->
+            <div class="vk-left-column">
+                <div class="vk-profile-box">
+                    <div class="vk-profile-avatar">
+                        <% if (user.avatar) { %>
+                            <img src="<%= user.avatar %>" alt="Avatar">
+                        <% } else { %>
+                            <div class="no-avatar"></div>
+                        <% } %>
+                    </div>
+                    <div class="vk-profile-info">
+                        <h2><%= user.firstName %> <%= user.lastName %></h2>
+                        <div class="vk-profile-links">
+                            <a href="/profile/<%= user.id %>">Моя страница</a>
+                            <a href="/edit">Редактировать</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vk-nav-menu">
+                    <ul>
+                        <li><a href="/messages">Все сообщения</a></li>
+                        <li><a href="/messages/new" class="active">Новое сообщение</a></li>
+                        <li><a href="/messages/unread">Непрочитанные</a></li>
+                        <li><a href="/messages/sent">Отправленные</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Центральная колонка -->
+            <div class="vk-center-column">
+                <div class="vk-new-message-form">
+                    <div class="vk-new-message-header">
+                        <h3>Новое сообщение</h3>
+                    </div>
+                    <form action="/messages/send" method="post">
+                        <div class="vk-form-group">
+                            <label for="receiver">Кому:</label>
+                            <input type="text" id="receiver" name="receiver" placeholder="Имя или email получателя" required>
+                        </div>
+                        <div class="vk-form-group">
+                            <label for="subject">Тема:</label>
+                            <input type="text" id="subject" name="subject" placeholder="Тема сообщения">
+                        </div>
+                        <div class="vk-form-group">
+                            <label for="content">Сообщение:</label>
+                            <textarea id="content" name="content" placeholder="Текст сообщения" required></textarea>
+                        </div>
+                        <div class="vk-form-actions">
+                            <button type="submit">Отправить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подвал -->
+        <div class="vk-footer">
+            <div class="vk-footer-links">
+                <a href="/">О ВКонтакте</a>
+                <a href="/">Правила</a>
+                <a href="/">Реклама</a>
+                <a href="/">Вакансии</a>
+            </div>
+            <div class="vk-footer-copyright">
+                © 2008 ВКонтакте
+            </div>
+        </div>
+    </div>
+</body>
+</html>

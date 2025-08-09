@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | VK</title>
+    <link rel="stylesheet" href="/css/vk2008.css">
+</head>
+<body>
+    <div class="vk-container">
+        <!-- Верхняя панель -->
+        <div class="vk-header">
+            <div class="vk-logo">
+                <a href="/">vk</a>
+            </div>
+            <div class="vk-nav">
+                <ul>
+                    <li><a href="/">Моя Страница</a></li>
+                    <li><a href="/friends">Мои Друзья</a></li>
+                    <li><a href="/messages" class="active">Сообщения</a></li>
+                    <li><a href="/photos">Фотографии</a></li>
+                    <li><a href="/groups">Группы</a></li>
+                </ul>
+            </div>
+            <div class="vk-search">
+                <form action="/search" method="get">
+                    <input type="text" name="q" placeholder="Поиск">
+                </form>
+            </div>
+            <div class="vk-user-menu">
+                <a href="/profile/<%= user.id %>"><%= user.firstName %> <%= user.lastName %></a>
+                <a href="/logout">Выход</a>
+            </div>
+        </div>
+
+        <div class="vk-content-wrapper">
+            <!-- Левая колонка -->
+            <div class="vk-left-column">
+                <div class="vk-profile-box">
+                    <div class="vk-profile-avatar">
+                        <% if (user.avatar) { %>
+                            <img src="<%= user.avatar %>" alt="Avatar">
+                        <% } else { %>
+                            <div class="no-avatar"></div>
+                        <% } %>
+                    </div>
+                    <div class="vk-profile-info">
+                        <h2><%= user.firstName %> <%= user.lastName %></h2>
+                        <div class="vk-profile-links">
+                            <a href="/profile/<%= user.id %>">Моя страница</a>
+                            <a href="/edit">Редактировать</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vk-nav-menu">
+                    <ul>
+                        <li><a href="/messages">Все сообщения</a></li>
+                        <li><a href="/messages/new">Новое сообщение</a></li>
+                        <li><a href="/messages/unread">Непрочитанные</a></li>
+                        <li><a href="/messages/sent" class="active">Отправленные</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Центральная колонка -->
+            <div class="vk-center-column">
+                <div class="vk-sent-messages">
+                    <h3>Отправленные сообщения</h3>
+                    <div class="vk-messages-list">
+                        <% if (messages.length > 0) { %>
+                            <% messages.forEach(message => { %>
+                                <div class="vk-message-item">
+                                    <div class="vk-message-avatar">
+                                        <% if (message.receiver.avatar) { %>
+                                            <img src="<%= message.receiver.avatar %>" alt="<%= message.receiver.firstName %> <%= message.receiver.lastName %>">
+                                        <% } else { %>
+                                            <div class="no-avatar"></div>
+                                        <% } %>
+                                    </div>
+                                    <div class="vk-message-info">
+                                        <div class="vk-message-receiver">
+                                            Кому: <a href="/profile/<%= message.receiver.id %>">
+                                                <%= message.receiver.firstName %> <%= message.receiver.lastName %>
+                                            </a>
+                                        </div>
+                                        <div class="vk-message-content">
+                                            <%= message.content.substring(0, 100) %>...
+                                        </div>
+                                        <div class="vk-message-time">
+                                            <%= new Date(message.createdAt).toLocaleString('ru-RU') %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div class="vk-no-messages">
+                                <p>Вы не отправили ни одного сообщения</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подвал -->
+        <div class="vk-footer">
+            <div class="vk-footer-links">
+                <a href="/">О ВКонтакте</a>
+                <a href="/">Правила</a>
+                <a href="/">Реклама</a>
+                <a href="/">Вакансии</a>
+            </div>
+            <div class="vk-footer-copyright">
+                © 2008 ВКонтакте
+            </div>
+        </div>
+    </div>
+</body>
+</html>

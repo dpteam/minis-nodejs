@@ -28,6 +28,11 @@
                     <div class="vk-login-header">
                         <h3>Вход</h3>
                     </div>
+                    <% if (error) { %>
+                        <div class="vk-error-message">
+                            <%= error %>
+                        </div>
+                    <% } %>
                     <form action="/login" method="post">
                         <div class="vk-form-group">
                             <label for="email">Email или телефон</label>

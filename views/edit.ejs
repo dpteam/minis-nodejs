@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | VK</title>
+    <link rel="stylesheet" href="/css/vk2008.css">
+</head>
+<body>
+    <div class="vk-container">
+        <!-- Верхняя панель -->
+        <div class="vk-header">
+            <div class="vk-logo">
+                <a href="/">vk</a>
+            </div>
+            <div class="vk-nav">
+                <ul>
+                    <li><a href="/">Моя Страница</a></li>
+                    <li><a href="/friends">Мои Друзья</a></li>
+                    <li><a href="/messages">Сообщения</a></li>
+                    <li><a href="/photos">Фотографии</a></li>
+                    <li><a href="/groups">Группы</a></li>
+                </ul>
+            </div>
+            <div class="vk-search">
+                <form action="/search" method="get">
+                    <input type="text" name="q" placeholder="Поиск">
+                </form>
+            </div>
+            <div class="vk-user-menu">
+                <a href="/profile/<%= user.id %>"><%= user.firstName %> <%= user.lastName %></a>
+                <a href="/logout">Выход</a>
+            </div>
+        </div>
+
+        <div class="vk-content-wrapper">
+            <!-- Левая колонка -->
+            <div class="vk-left-column">
+                <div class="vk-profile-box">
+                    <div class="vk-profile-avatar">
+                        <% if (user.avatar) { %>
+                            <img src="<%= user.avatar %>" alt="Avatar">
+                        <% } else { %>
+                            <div class="no-avatar"></div>
+                        <% } %>
+                    </div>
+                    <div class="vk-profile-info">
+                        <h2><%= user.firstName %> <%= user.lastName %></h2>
+                        <div class="vk-profile-links">
+                            <a href="/profile/<%= user.id %>">Моя страница</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vk-nav-menu">
+                    <ul>
+                        <li><a href="/profile/<%= user.id %>">Моя страница</a></li>
+                        <li><a href="/edit" class="active">Редактировать</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Центральная колонка -->
+            <div class="vk-center-column">
+                <div class="vk-edit-form">
+                    <div class="vk-edit-form-header">
+                        <h3>Редактирование профиля</h3>
+                    </div>
+                    <% if (error) { %>
+                        <div class="vk-error-message">
+                            <%= error %>
+                        </div>
+                    <% } %>
+                    <form action="/edit" method="post">
+                        <div class="vk-form-group">
+                            <label for="firstName">Имя</label>
+                            <input type="text" id="firstName" name="firstName" value="<%= user.firstName %>" required>
+                        </div>
+                        <div class="vk-form-group">
+                            <label for="lastName">Фамилия</label>
+                            <input type="text" id="lastName" name="lastName" value="<%= user.lastName %>" required>
+                        </div>
+                        <div class="vk-form-group">
+                            <label for="bio">О себе</label>
+                            <textarea id="bio" name="bio"><%= user.bio || '' %></textarea>
+                        </div>
+                        <div class="vk-form-group">
+                            <label for="birthDate">Дата рождения</label>
+                            <input type="date" id="birthDate" name="birthDate" value="<%= user.birthDate ? new Date(user.birthDate).toISOString().split('T')[0] : '' %>">
+                        </div>
+                        <div class="vk-form-group">
+                            <label for="city">Город</label>
+                            <input type="text" id="city" name="city" value="<%= user.city || '' %>">
+                        </div>
+                        <div class="vk-form-actions">
+                            <button type="submit">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подвал -->
+        <div class="vk-footer">
+            <div class="vk-footer-links">
+                <a href="/">О ВКонтакте</a>
+                <a href="/">Правила</a>
+                <a href="/">Реклама</a>
+                <a href="/">Вакансии</a>
+            </div>
+            <div class="vk-footer-copyright">
+                © 2008 ВКонтакте
+            </div>
+        </div>
+    </div>
+</body>
+</html>

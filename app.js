@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
+const flash = require('connect-flash');
 const path = require('path');
 const db = require('./models');
 const { sequelize } = db;
@@ -10,6 +11,9 @@ const friendsRouter = require('./routes/friends');
 const messagesRouter = require('./routes/messages');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
+const editRouter = require('./routes/edit');
+const groupsRouter = require('./routes/groups');
+const photosRouter = require('./routes/photos');
 
 const app = express();
 
@@ -29,6 +33,9 @@ app.use(session({
   saveUninitialized: false
 }));
 
+// Подключаем flash сообщения
+app.use(flash());
+
 // Инициализация Passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -43,6 +50,9 @@ app.use('/friends', friendsRouter);
 app.use('/messages', messagesRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
+app.use('/edit', editRouter);
+app.use('/groups', groupsRouter);
+app.use('/photos', photosRouter);
 
 // Запуск сервера
 const PORT = process.env.PORT || 3000;

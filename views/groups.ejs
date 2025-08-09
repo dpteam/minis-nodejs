@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | VK</title>
+    <link rel="stylesheet" href="/css/vk2008.css">
+</head>
+<body>
+    <div class="vk-container">
+        <!-- Верхняя панель -->
+        <div class="vk-header">
+            <div class="vk-logo">
+                <a href="/">vk</a>
+            </div>
+            <div class="vk-nav">
+                <ul>
+                    <li><a href="/">Моя Страница</a></li>
+                    <li><a href="/friends">Мои Друзья</a></li>
+                    <li><a href="/messages">Сообщения</a></li>
+                    <li><a href="/photos">Фотографии</a></li>
+                    <li><a href="/groups" class="active">Группы</a></li>
+                </ul>
+            </div>
+            <div class="vk-search">
+                <form action="/search" method="get">
+                    <input type="text" name="q" placeholder="Поиск">
+                </form>
+            </div>
+            <div class="vk-user-menu">
+                <a href="/profile/<%= user.id %>"><%= user.firstName %> <%= user.lastName %></a>
+                <a href="/logout">Выход</a>
+            </div>
+        </div>
+
+        <div class="vk-content-wrapper">
+            <!-- Левая колонка -->
+            <div class="vk-left-column">
+                <div class="vk-profile-box">
+                    <div class="vk-profile-avatar">
+                        <% if (user.avatar) { %>
+                            <img src="<%= user.avatar %>" alt="Avatar">
+                        <% } else { %>
+                            <div class="no-avatar"></div>
+                        <% } %>
+                    </div>
+                    <div class="vk-profile-info">
+                        <h2><%= user.firstName %> <%= user.lastName %></h2>
+                        <div class="vk-profile-links">
+                            <a href="/profile/<%= user.id %>">Моя страница</a>
+                            <a href="/edit">Редактировать</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vk-nav-menu">
+                    <ul>
+                        <li><a href="/groups" class="active">Мои группы</a></li>
+                        <li><a href="/groups/suggested">Рекомендуемые</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Центральная колонка -->
+            <div class="vk-center-column">
+                <!-- Форма создания группы -->
+                <div class="vk-create-group">
+                    <h3>Создать группу</h3>
+                    <form action="/groups/create" method="post">
+                        <input type="text" name="name" placeholder="Название группы" required>
+                        <button type="submit">Создать</button>
+                    </form>
+                </div>
+
+                <!-- Мои группы -->
+                <div class="vk-my-groups">
+                    <h3>Мои группы</h3>
+                    <div class="vk-groups-list">
+                        <% if (userGroups.length > 0) { %>
+                            <% userGroups.forEach(userGroup => { %>
+                                <div class="vk-group-item">
+                                    <div class="vk-group-avatar">
+                                        <% if (userGroup.group.avatar) { %>
+                                            <img src="<%= userGroup.group.avatar %>" alt="<%= userGroup.group.name %>">
+                                        <% } else { %>
+                                            <div class="no-avatar"></div>
+                                        <% } %>
+                                    </div>
+                                    <div class="vk-group-info">
+                                        <div class="vk-group-name">
+                                            <a href="/groups/<%= userGroup.group.id %>">
+                                                <%= userGroup.group.name %>
+                                            </a>
+                                        </div>
+                                        <div class="vk-group-description">
+                                            <%= userGroup.group.description || 'Нет описания' %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div class="vk-no-groups">
+                                <p>Вы не состоите ни в одной группе</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+
+                <!-- Популярные группы -->
+                <div class="vk-popular-groups">
+                    <h3>Популярные группы</h3>
+                    <div class="vk-groups-list">
+                        <% if (popularGroups.length > 0) { %>
+                            <% popularGroups.forEach(group => { %>
+                                <div class="vk-group-item">
+                                    <div class="vk-group-avatar">
+                                        <% if (group.avatar) { %>
+                                            <img src="<%= group.avatar %>" alt="<%= group.name %>">
+                                        <% } else { %>
+                                            <div class="no-avatar"></div>
+                                        <% } %>
+                                    </div>
+                                    <div class="vk-group-info">
+                                        <div class="vk-group-name">
+                                            <a href="/groups/<%= group.id %>">
+                                                <%= group.name %>
+                                            </a>
+                                        </div>
+                                        <div class="vk-group-description">
+                                            <%= group.description || 'Нет описания' %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div class="vk-no-groups">
+                                <p>Популярных групп пока нет</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подвал -->
+        <div class="vk-footer">
+            <div class="vk-footer-links">
+                <a href="/">О ВКонтакте</a>
+                <a href="/">Правила</a>
+                <a href="/">Реклама</a>
+                <a href="/">Вакансии</a>
+            </div>
+            <div class="vk-footer-copyright">
+                © 2008 ВКонтакте
+            </div>
+        </div>
+    </div>
+</body>
+</html>
