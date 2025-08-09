@@ -1,0 +1,367 @@
+/* Основные стили в стиле ВКонтакте 2008 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Tahoma', 'Arial', sans-serif;
+    font-size: 11px;
+    background-color: #f7f7f7;
+    color: #000;
+}
+
+.vk-container {
+    width: 791px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-left: 1px solid #d8dfea;
+    border-right: 1px solid #d8dfea;
+}
+
+/* Верхняя панель */
+.vk-header {
+    background-color: #4a76a8;
+    color: #fff;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.vk-logo a {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.vk-nav ul {
+    list-style: none;
+    display: flex;
+}
+
+.vk-nav li {
+    margin-right: 15px;
+}
+
+.vk-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 11px;
+    padding: 5px 8px;
+    border-radius: 2px;
+}
+
+.vk-nav a:hover, .vk-nav a.active {
+    background-color: #5b84b5;
+}
+
+.vk-search {
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.vk-search input {
+    width: 150px;
+    height: 22px;
+    border: 1px solid #3a5f8a;
+    background-color: #4a76a8;
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 2px;
+}
+
+.vk-search input::placeholder {
+    color: #a3b6d0;
+}
+
+.vk-user-menu a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 10px;
+    font-size: 11px;
+}
+
+/* Основной контент */
+.vk-content-wrapper {
+    display: flex;
+    padding: 10px;
+}
+
+.vk-left-column {
+    width: 140px;
+    margin-right: 10px;
+}
+
+.vk-center-column {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.vk-right-column {
+    width: 140px;
+}
+
+/* Профильный блок */
+.vk-profile-box {
+    background-color: #edeff1;
+    border: 1px solid #d8dfea;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.vk-profile-avatar {
+    width: 50px;
+    height: 50px;
+    background-color: #dae1e8;
+    margin: 0 auto 5px;
+    border-radius: 3px;
+}
+
+.vk-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+}
+
+.no-avatar {
+    width: 100%;
+    height: 100%;
+    background-color: #dae1e8;
+    border-radius: 3px;
+}
+
+.vk-profile-info h2 {
+    font-size: 11px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.vk-profile-links {
+    text-align: center;
+}
+
+.vk-profile-links a {
+    color: #2b587a;
+    text-decoration: none;
+    font-size: 10px;
+}
+
+/* Навигация */
+.vk-nav-menu {
+    background-color: #edeff1;
+    border: 1px solid #d8dfea;
+    padding: 10px;
+}
+
+.vk-nav-menu ul {
+    list-style: none;
+}
+
+.vk-nav-menu li {
+    margin-bottom: 5px;
+}
+
+.vk-nav-menu a {
+    color: #2b587a;
+    text-decoration: none;
+    font-size: 11px;
+    display: block;
+    padding: 3px 5px;
+}
+
+.vk-nav-menu a:hover {
+    background-color: #e1e5ea;
+    text-decoration: underline;
+}
+
+/* Форма поста */
+.vk-post-form {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    margin-bottom: 10px;
+}
+
+.vk-post-form-header {
+    background-color: #edeff1;
+    border-bottom: 1px solid #d8dfea;
+    padding: 8px 10px;
+}
+
+.vk-post-form-header h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+}
+
+.vk-post-form textarea {
+    width: 100%;
+    min-height: 50px;
+    border: none;
+    padding: 10px;
+    font-size: 11px;
+    font-family: 'Tahoma', 'Arial', sans-serif;
+    resize: none;
+}
+
+.vk-post-form-actions {
+    text-align: right;
+    padding: 8px 10px;
+    background-color: #f7f7f7;
+    border-top: 1px solid #d8dfea;
+}
+
+.vk-post-form-actions button {
+    background-color: #4a76a8;
+    color: #fff;
+    border: none;
+    padding: 5px 15px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+/* Посты */
+.vk-posts {
+    margin-bottom: 10px;
+}
+
+.vk-post {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    margin-bottom: 10px;
+}
+
+.vk-post-header {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid #edeff1;
+}
+
+.vk-post-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.vk-post-info {
+    flex: 1;
+}
+
+.vk-post-author a {
+    color: #2b587a;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.vk-post-time {
+    color: #999;
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+.vk-post-content {
+    padding: 10px;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.vk-post-footer {
+    padding: 8px 10px;
+    background-color: #f7f7f7;
+    border-top: 1px solid #edeff1;
+}
+
+.vk-post-actions {
+    display: flex;
+}
+
+.vk-post-actions a {
+    color: #2b587a;
+    text-decoration: none;
+    font-size: 10px;
+    margin-right: 15px;
+}
+
+.vk-post-actions a:hover {
+    text-decoration: underline;
+}
+
+.like-count {
+    color: #777;
+    font-size: 10px;
+    margin-left: 5px;
+}
+
+.vk-no-posts {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    padding: 20px;
+    text-align: center;
+    color: #777;
+}
+
+.vk-no-posts p {
+    margin-bottom: 5px;
+}
+
+/* Правая колонка */
+.vk-friends-box, .vk-groups-box, .vk-apps-box {
+    background-color: #edeff1;
+    border: 1px solid #d8dfea;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.vk-friends-box h3, .vk-groups-box h3, .vk-apps-box h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.vk-friend-item, .vk-group-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.vk-friend-avatar, .vk-group-avatar {
+    width: 30px;
+    height: 30px;
+    background-color: #dae1e8;
+    margin-right: 8px;
+    border-radius: 2px;
+}
+
+.vk-friend-name, .vk-group-name {
+    font-size: 10px;
+    color: #2b587a;
+}
+
+/* Подвал */
+.vk-footer {
+    background-color: #edeff1;
+    border-top: 1px solid #d8dfea;
+    padding: 10px;
+    text-align: center;
+    font-size: 10px;
+    color: #777;
+}
+
+.vk-footer-links {
+    margin-bottom: 5px;
+}
+
+.vk-footer-links a {
+    color: #2b587a;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.vk-footer-links a:hover {
+    text-decoration: underline;
+}

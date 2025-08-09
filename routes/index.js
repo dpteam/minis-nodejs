@@ -1,54 +1,40 @@
 const express = require('express');
 const router = express.Router();
-const { ensureAuthenticated } = require('../middleware/auth');
-const feedService = require('../services/feedService');
+const { Message, User, Like } = require('../models');
 
-// Главная страница
 router.get('/', async (req, res) => {
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 20;
-        const feed = await feedService.getPublicFeed(page, limit);
-        
-        res.render('index', {
-            title: 'Minis - Minimal Social Network',
-            posts: feed.rows, // Передаем массив записей как posts
-            user: req.user,
-            currentPage: page,
-            totalPages: Math.ceil(feed.count / limit),
-        });
-    } catch (error) {
-        console.error('Error loading feed:', error);
-        res.status(500).render('error', {
-            message: 'Error loading feed',
-            error: process.env.NODE_ENV === 'development' ? error : {}
-        });
-    }
-});
-
-// Лента пользователя
-router.get('/feed', ensureAuthenticated, async (req, res) => {
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 20;
-        const feedType = req.query.type || 'all'; // all, friends, groups
-        const feed = await feedService.getUserFeed(req.user.id, feedType, page, limit);
-        
-        res.render('feed', {
-            title: 'Your Feed',
-            posts: feed.rows, // Передаем массив записей как posts
-            feedType,
-            user: req.user,
-            currentPage: page,
-            totalPages: Math.ceil(feed.count / limit),
-        });
-    } catch (error) {
-        console.error('Error loading user feed:', error);
-        res.status(500).render('error', {
-            message: 'Error loading feed',
-            error: process.env.NODE_ENV === 'development' ? error : {}
-        });
-    }
+  try {
+    // Получаем посты с авторами и лайками
+    const posts = await Message.findAll({
+      where: {
+        deleted: 0,
+        parentId: null,
+        visibility: 'public'
+      },
+      include: [
+        { 
+          model: User, 
+          as: 'author',
+          attributes: ['id', 'firstName', 'lastName', 'avatar']
+        },
+        { 
+          model: Like,
+          attributes: ['id', 'userId']
+        }
+      ],
+      order: [['postTime', 'DESC']],
+      limit: 20
+    });
+    
+    res.render('index', { 
+      title: 'Моя Страница',
+      posts: posts,
+      user: req.user || null // Для аутентификации
+    });
+  } catch (error) {
+    console.error('Error loading posts:', error);
+    res.status(500).send('Ошибка загрузки страницы');
+  }
 });
 
 module.exports = router;

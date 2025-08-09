@@ -1,179 +1,188 @@
-<div class="vk-content-box">
-    <h2><i class="fas fa-newspaper"></i> Новости</h2>
-    
-    <!-- Post Form -->
-    <%if (user) { %>
-    <form action="/posts" method="POST" class="vk-post-form">
-        <div class="vk-form-group">
-            <textarea name="content" class="vk-form-control" placeholder="Что у вас нового?" required><%=typeof postContent !=='undefined'? postContent :''%></textarea>
-        </div>
-        <button type="submit" class="vk-btn">
-            <i class="fas fa-paper-plane"></i> Опубликовать
-        </button>
-    </form>
-    <hr style="margin: 15px 0; border: none; border-top: 1px solid #E8EBEE;">
-    <% } %>
-
-    <!-- Posts -->
-    <div class="vk-posts">
-        <% posts.forEach(post => { %>
-        <div class="vk-post">
-            <div class="vk-post-header">
-                <div class="vk-post-avatar">
-                    <%if (post.author.avatar) { %>
-                        <img src="<%= post.author.avatar %>" alt="<%= post.author.firstName %> <%= post.author.lastName %>" style="width: 32px; height: 32px; border-radius: 2px; object-fit: cover;">
-                    <% } else { %>
-                        <i class="fas fa-user"></i>
-                    <% } %>
-                </div>
-                <div>
-                    <a href="/profile/<%= post.author.id %>" class="vk-post-author"><%= post.author.firstName %><%= post.author.lastName %></a>
-                    <span class="vk-post-time"><%= post.createdAt %></span>
-                </div>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | VK</title>
+    <link rel="stylesheet" href="/css/vk2008.css">
+</head>
+<body>
+    <div class="vk-container">
+        <!-- Верхняя панель -->
+        <div class="vk-header">
+            <div class="vk-logo">
+                <a href="/">vk</a>
             </div>
-            <div class="vk-post-content">
-                <%= post.content %>
+            <div class="vk-nav">
+                <ul>
+                    <li><a href="/" class="active">Моя Страница</a></li>
+                    <li><a href="/friends">Мои Друзья</a></li>
+                    <li><a href="/messages">Сообщения</a></li>
+                    <li><a href="/photos">Фотографии</a></li>
+                    <li><a href="/groups">Группы</a></li>
+                </ul>
             </div>
-            <div class="vk-post-actions">
-                <a href="#" onclick="likePost(<%= post.id %>)">
-                    <i class="fas fa-thumbs-up"></i> Мне нравится <%=post.likes&&post.likes.length>0?'('+post.likes.length+')':''%>
-                </a>
-                <a href="#" onclick="showComments(<%= post.id %>)">
-                    <i class="fas fa-comment"></i> Комментарии <%=post.comments&&post.comments.length>0?'('+post.comments.length+')':''%>
-                </a>
-                <a href="#" onclick="sharePost(<%= post.id %>)">
-                    <i class="fas fa-share"></i> Поделиться
-                </a>
-                <%if (user &&user.id===post.author.id) { %>
-                <a href="#" onclick="deletePost(<%= post.id %>)">
-                    <i class="fas fa-trash"></i> Удалить
-                </a>
+            <div class="vk-search">
+                <form action="/search" method="get">
+                    <input type="text" name="q" placeholder="Поиск">
+                </form>
+            </div>
+            <div class="vk-user-menu">
+                <% if (user) { %>
+                    <a href="/profile"><%= user.firstName %> <%= user.lastName %></a>
+                    <a href="/logout">Выход</a>
+                <% } else { %>
+                    <a href="/login">Вход</a>
+                    <a href="/register">Регистрация</a>
                 <% } %>
             </div>
-            
-            <!-- Comments Section -->
-            <%if (post.comments&&post.comments.length>0) { %>
-            <div class="vk-comments">
-                <%post.comments.forEach(comment=> { %>
-                <div class="vk-comment">
-                    <div class="vk-comment-header">
-                        <div class="vk-comment-avatar">
-                            <%if (comment.author.avatar) { %>
-                                <img src="<%= comment.author.avatar %>" alt="<%= comment.author.firstName %> <%= comment.author.lastName %>" style="width: 24px; height: 24px; border-radius: 2px; object-fit: cover;">
-                            <% } else { %>
-                                <i class="fas fa-user"></i>
-                            <% } %>
-                        </div>
-                        <div>
-                            <a href="/profile/<%= comment.author.id %>" class="vk-comment-author"><%= comment.author.firstName %><%= comment.author.lastName %></a>
-                            <span class="vk-comment-time"><%= comment.createdAt %></span>
-                        </div>
-                    </div>
-                    <div class="vk-comment-content">
-                        <%= comment.content %>
-                    </div>
-                    <div class="vk-comment-actions">
-                        <%if (user &&user.id===comment.author.id) { %>
-                        <a href="#" onclick="deleteComment(<%= comment.id %>)">
-                            <i class="fas fa-trash"></i> Удалить
-                        </a>
+        </div>
+
+        <div class="vk-content-wrapper">
+            <!-- Левая колонка -->
+            <div class="vk-left-column">
+                <div class="vk-profile-box">
+                    <div class="vk-profile-avatar">
+                        <% if (user && user.avatar) { %>
+                            <img src="<%= user.avatar %>" alt="Avatar">
+                        <% } else { %>
+                            <div class="no-avatar"></div>
                         <% } %>
                     </div>
+                    <div class="vk-profile-info">
+                        <h2><%= user ? user.firstName + ' ' + user.lastName : 'Гость' %></h2>
+                        <div class="vk-profile-links">
+                            <a href="/profile">Моя страница</a>
+                            <a href="/edit">Редактировать</a>
+                        </div>
+                    </div>
                 </div>
-                <% }); %>
+
+                <div class="vk-nav-menu">
+                    <ul>
+                        <li><a href="/">Моя Страница</a></li>
+                        <li><a href="/friends">Мои Друзья</a></li>
+                        <li><a href="/photos">Фотографии</a></li>
+                        <li><a href="/videos">Видеозаписи</a></li>
+                        <li><a href="/groups">Группы</a></li>
+                        <li><a href="/events">Мероприятия</a></li>
+                        <li><a href="/apps">Приложения</a></li>
+                    </ul>
+                </div>
             </div>
-            <% } %>
-            
-            <!-- Add Comment Form -->
-            <%if (user) { %>
-            <form action="/posts/<%= post.id %>/comments" method="POST" class="vk-comment-form">
-                <div class="vk-form-group">
-                    <input type="text" name="content" class="vk-form-control" placeholder="Написать комментарий..." required>
+
+            <!-- Центральная колонка -->
+            <div class="vk-center-column">
+                <!-- Форма добавления поста -->
+                <div class="vk-post-form">
+                    <div class="vk-post-form-header">
+                        <h3>Что у вас нового?</h3>
+                    </div>
+                    <form action="/posts" method="post">
+                        <textarea name="content" placeholder="Напишите о чем думаете..."></textarea>
+                        <div class="vk-post-form-actions">
+                            <button type="submit">Отправить</button>
+                        </div>
+                    </form>
                 </div>
-                <button type="submit" class="vk-btn vk-btn-small">
-                    <i class="fas fa-paper-plane"></i> Отправить
-                </button>
-            </form>
-            <% } %>
+
+                <!-- Посты -->
+                <div class="vk-posts">
+                    <% if (posts && posts.length > 0) { %>
+                        <% posts.forEach(post => { %>
+                            <div class="vk-post">
+                                <div class="vk-post-header">
+                                    <div class="vk-post-avatar">
+                                        <% if (post.author && post.author.avatar) { %>
+                                            <img src="<%= post.author.avatar %>" alt="<%= post.author.firstName %> <%= post.author.lastName %>">
+                                        <% } else { %>
+                                            <div class="no-avatar"></div>
+                                        <% } %>
+                                    </div>
+                                    <div class="vk-post-info">
+                                        <div class="vk-post-author">
+                                            <a href="/user/<%= post.author.id %>">
+                                                <%= post.author.firstName %> <%= post.author.lastName %>
+                                            </a>
+                                        </div>
+                                        <div class="vk-post-time">
+                                            <%= new Date(post.postTime).toLocaleString('ru-RU') %>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vk-post-content">
+                                    <%= post.content %>
+                                </div>
+                                <div class="vk-post-footer">
+                                    <div class="vk-post-actions">
+                                        <a href="#" class="like-btn">Мне нравится</a>
+                                        <% if (post.Likes && post.Likes.length > 0) { %>
+                                            <span class="like-count"><%= post.Likes.length %></span>
+                                        <% } %>
+                                        <a href="#" class="comment-btn">Комментировать</a>
+                                        <a href="#" class="share-btn">Поделиться</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <div class="vk-no-posts">
+                            <p>Нет записей на стене</p>
+                            <p>Будьте первым, кто напишет что-нибудь!</p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+
+            <!-- Правая колонка -->
+            <div class="vk-right-column">
+                <div class="vk-friends-box">
+                    <h3>Мои друзья</h3>
+                    <div class="vk-friends-list">
+                        <!-- Здесь будет список друзей -->
+                        <div class="vk-friend-item">
+                            <div class="vk-friend-avatar"></div>
+                            <div class="vk-friend-name">Иван Петров</div>
+                        </div>
+                        <div class="vk-friend-item">
+                            <div class="vk-friend-avatar"></div>
+                            <div class="vk-friend-name">Мария Сидорова</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vk-groups-box">
+                    <h3>Мои группы</h3>
+                    <div class="vk-groups-list">
+                        <!-- Здесь будет список групп -->
+                        <div class="vk-group-item">
+                            <div class="vk-group-avatar"></div>
+                            <div class="vk-group-name">Фанаты ВКонтакте</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vk-apps-box">
+                    <h3>Приложения</h3>
+                    <div class="vk-apps-list">
+                        <!-- Здесь будет список приложений -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <% }); %>
-        
-        <%if (posts.length===0) { %>
-        <div class="vk-empty-state">
-            <i class="fas fa-newspaper"></i>
-            <p>Нет записей</p>
+
+        <!-- Подвал -->
+        <div class="vk-footer">
+            <div class="vk-footer-links">
+                <a href="/">О ВКонтакте</a>
+                <a href="/">Правила</a>
+                <a href="/">Реклама</a>
+                <a href="/">Вакансии</a>
+            </div>
+            <div class="vk-footer-copyright">
+                © 2008 ВКонтакте
+            </div>
         </div>
-        <% } %>
     </div>
-</div>
-
-<script>
-function likePost(postId) {
-    fetch(`/posts/${postId}/like`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            location.reload();
-        }
-    });
-}
-
-function showComments(postId) {
-    const commentsSection = document.querySelector(`#comments-${postId}`);
-    if (commentsSection) {
-        commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
-    }
-}
-
-function sharePost(postId) {
-    if (navigator.share) {
-        navigator.share({
-            title: 'Поделиться записью',
-            url: window.location.origin + '/posts/' + postId
-        });
-    } else {
-        navigator.clipboard.writeText(window.location.origin + '/posts/' + postId);
-        alert('Ссылка скопирована в буфер обмена');
-    }
-}
-
-function deletePost(postId) {
-    if (confirm('Вы уверены, что хотите удалить эту запись?')) {
-        fetch(`/posts/${postId}`, {
-            method: 'DELETE',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            }
-        });
-    }
-}
-
-function deleteComment(commentId) {
-    if (confirm('Вы уверены, что хотите удалить этот комментарий?')) {
-        fetch(`/comments/${commentId}`, {
-            method: 'DELETE',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            }
-        });
-    }
-}
-</script>
+</body>
+</html>
