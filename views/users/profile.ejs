@@ -1,160 +1,228 @@
-<div class="profile-container">
-    <div class="profile-header">
-        <div class="profile-cover">
-            <div class="profile-cover-overlay"></div>
+<div class="vk-content-box">
+    <div class="vk-profile-header">
+        <div class="vk-profile-avatar">
+            <% if (profileUser.avatar) { %>
+                <img src="<%= profileUser.avatar %>" alt="<%= profileUser.firstName %> <%= profileUser.lastName %>" style="width: 100px; height: 100px; border-radius: 2px; object-fit: cover;">
+            <% } else { %>
+                <i class="fas fa-user"></i>
+            <% } %>
         </div>
-        
-        <div class="profile-info">
-            <div class="profile-avatar-section">
-                <img src="<%= profileUser.avatar || '/images/default-avatar.png' %>" 
-                     alt="<%= profileUser.firstName %> <%= profileUser.lastName %>" 
-                     class="profile-avatar">
-                <% if (isOwnProfile) { %>
-                <button class="avatar-upload-btn" onclick="document.getElementById('avatarInput').click()">
-                    📷 Change Photo
-                </button>
-                <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="uploadAvatar(this)">
-                <% } %>
-            </div>
+        <div class="vk-profile-info">
+            <h2><%= profileUser.firstName %> <%= profileUser.lastName %></h2>
+            <p><i class="fas fa-envelope"></i> <%= profileUser.email %></p>
+            <% if (profileUser.bio) { %>
+            <p><i class="fas fa-info-circle"></i> <%= profileUser.bio %></p>
+            <% } %>
+            <p><i class="fas fa-calendar"></i> Зарегистрирован: <%= profileUser.createdAt %></p>
             
-            <div class="profile-details">
-                <h1 class="profile-name">
-                    <%= profileUser.firstName %> <%= profileUser.lastName %>
-                    <% if (profileUser.emailPublic) { %>
-                    <span class="profile-email">&lt;<%= profileUser.email %>&gt;</span>
-                    <% } %>
-                </h1>
-                
-                <% if (profileUser.bio) { %>
-                <p class="profile-bio"><%= profileUser.bio %></p>
-                <% } %>
-                
-                <div class="profile-stats">
-                    <div class="stat-item">
-                        <strong class="stat-number"><%= messageCount %></strong>
-                        <span class="stat-label">Messages</span>
-                    </div>
-                    <div class="stat-item">
-                        <strong class="stat-number"><%= friendCount %></strong>
-                        <span class="stat-label">Friends</span>
-                    </div>
-                    <div class="stat-item">
-                        <strong class="stat-number">
-                            <%= formatDate(profileUser.registrationTime, 'MMMM YYYY') %>
-                        </strong>
-                        <span class="stat-label">Joined</span>
-                    </div>
-                </div>
-                
-                <% if (!isOwnProfile && user) { %>
-                <div class="profile-actions">
-                    <% if (friendshipStatus === 'accepted') { %>
-                    <button class="btn btn-outline" onclick="removeFriend(<%= profileUser.id %>)">
-                        Remove Friend
+            <% if (user && user.id !== profileUser.id) { %>
+            <div class="vk-profile-actions">
+                <% if (isFriend) { %>
+                    <button class="vk-btn vk-btn-secondary" onclick="removeFriend(<%= profileUser.id %>)">
+                        <i class="fas fa-user-minus"></i> Удалить из друзей
                     </button>
-                    <% } else if (friendshipStatus === 'pending') { %>
-                    <button class="btn btn-outline" disabled>
-                        Friend Request Sent
+                <% } else if (friendRequestSent) { %>
+                    <button class="vk-btn vk-btn-secondary" disabled>
+                        <i class="fas fa-clock"></i> Запрос отправлен
                     </button>
-                    <% } else if (friendshipStatus === 'received') { %>
-                    <button class="btn btn-primary" onclick="acceptFriend(<%= profileUser.id %>)">
-                        Accept Friend
-                    </button>
-                    <button class="btn btn-outline" onclick="rejectFriend(<%= profileUser.id %>)">
-                        Reject
-                    </button>
-                    <% } else { %>
-                    <button class="btn btn-primary" onclick="addFriend(<%= profileUser.id %>)">
-                        Add Friend
-                    </button>
-                    <% } %>
-                    
-                    <button class="btn btn-outline" onclick="sendMessage(<%= profileUser.id %>)">
-                        Message
-                    </button>
-                </div>
-                <% } else if (isOwnProfile) { %>
-                <div class="profile-actions">
-                    <a href="/edit-profile" class="btn btn-primary">Edit Profile</a>
-                    <a href="/settings" class="btn btn-outline">Settings</a>
-                </div>
-                <% } %>
-            </div>
-        </div>
-    </div>
-    
-    <div class="profile-content">
-        <div class="profile-tabs">
-            <button class="tab-btn active" onclick="showTab('messages')">
-                Messages (<%= profileUser.messages ? profileUser.messages.length : 0 %>)
-            </button>
-            <button class="tab-btn" onclick="showTab('friends')">
-                Friends
-            </button>
-            <button class="tab-btn" onclick="showTab('about')">
-                About
-            </button>
-        </div>
-        
-        <div class="tab-content">
-            <div id="messages-tab" class="tab-pane active">
-                <% if (profileUser.messages && profileUser.messages.length > 0) { %>
-                <div class="messages-grid">
-                    <% profileUser.messages.forEach(message => { %>
-                    <%- include('../partials/message-card', { message, user }) %>
-                    <% }); %>
-                </div>
                 <% } else { %>
-                <div class="empty-state">
-                    <p>No messages yet.</p>
-                    <% if (isOwnProfile) { %>
-                    <a href="/messages" class="btn btn-primary">Create your first message</a>
-                    <% } %>
-                </div>
+                    <button class="vk-btn" onclick="addFriend(<%= profileUser.id %>)">
+                        <i class="fas fa-user-plus"></i> Добавить в друзья
+                    </button>
                 <% } %>
+                
+                <a href="/messages/new/<%= profileUser.id %>" class="vk-btn">
+                    <i class="fas fa-envelope"></i> Написать сообщение
+                </a>
             </div>
-            
-            <div id="friends-tab" class="tab-pane" style="display: none;">
-                <div class="friends-grid">
-                    <!-- Друзья загружаются через JavaScript -->
-                </div>
+            <% } else if (user && user.id === profileUser.id) { %>
+            <div class="vk-profile-actions">
+                <a href="/edit-profile" class="vk-btn">
+                    <i class="fas fa-edit"></i> Редактировать страницу
+                </a>
             </div>
-            
-            <div id="about-tab" class="tab-pane" style="display: none;">
-                <div class="about-section">
-                    <h3>About</h3>
-                    <% if (profileUser.bio) { %>
-                    <p><%= profileUser.bio %></p>
-                    <% } else { %>
-                    <p>No bio available.</p>
-                    <% } %>
-                    
-                    <div class="about-details">
-                        <div class="detail-row">
-                            <span class="detail-label">Email:</span>
-                            <span class="detail-value">
-                                <% if (profileUser.emailPublic) { %>
-                                <%= profileUser.email %>
-                                <% } else { %>
-                                Private
-                                <% } %>
-                            </span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Member since:</span>
-                            <span class="detail-value">
-                                <%= formatDate(profileUser.registrationTime, 'MMMM D, YYYY') %>
-                            </span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Last active:</span>
-                            <span class="detail-value">
-                                <%= formatRelativeTime(profileUser.lastActivityTime) %>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <% } %>
         </div>
     </div>
 </div>
+
+<div class="vk-content-box">
+    <h2><i class="fas fa-user-friends"></i> Друзья (<%= friends.length %>)</h2>
+    <% if (friends.length > 0) { %>
+    <div class="vk-friends-grid">
+        <% friends.forEach(friend => { %>
+        <div class="vk-friend-item">
+            <div class="vk-friend-avatar">
+                <% if (friend.avatar) { %>
+                    <img src="<%= friend.avatar %>" alt="<%= friend.firstName %> <%= friend.lastName %>" style="width: 50px; height: 50px; border-radius: 2px; object-fit: cover;">
+                <% } else { %>
+                    <i class="fas fa-user"></i>
+                <% } %>
+            </div>
+            <div class="vk-friend-info">
+                <a href="/profile/<%= friend.id %>" class="vk-friend-name"><%= friend.firstName %> <%= friend.lastName %></a>
+                <p class="vk-friend-mutual"><%= friend.mutualFriends || 0 %> общих друзей</p>
+            </div>
+            <div class="vk-friend-actions">
+                <a href="/messages/new/<%= friend.id %>" class="vk-btn vk-btn-small">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+    <% } else { %>
+    <div class="vk-empty-state">
+        <i class="fas fa-user-friends"></i>
+        <p>Нет друзей</p>
+    </div>
+    <% } %>
+</div>
+
+<div class="vk-content-box">
+    <h2><i class="fas fa-newspaper"></i> Записи <%= profileUser.firstName %></h2>
+    
+    <% if (user && user.id === profileUser.id) { %>
+    <form action="/posts" method="POST" class="vk-post-form">
+        <div class="vk-form-group">
+            <textarea name="content" class="vk-form-control" placeholder="Что у вас нового?" required></textarea>
+        </div>
+        <button type="submit" class="vk-btn">
+            <i class="fas fa-paper-plane"></i> Опубликовать
+        </button>
+    </form>
+    <hr style="margin: 15px 0; border: none; border-top: 1px solid #E8EBEE;">
+    <% } %>
+
+    <div class="vk-posts">
+        <% posts.forEach(post => { %>
+        <div class="vk-post">
+            <div class="vk-post-header">
+                <div class="vk-post-avatar">
+                    <% if (post.author.avatar) { %>
+                        <img src="<%= post.author.avatar %>" alt="<%= post.author.firstName %> <%= post.author.lastName %>" style="width: 32px; height: 32px; border-radius: 2px; object-fit: cover;">
+                    <% } else { %>
+                        <i class="fas fa-user"></i>
+                    <% } %>
+                </div>
+                <div>
+                    <a href="/profile/<%= post.author.id %>" class="vk-post-author"><%= post.author.firstName %> <%= post.author.lastName %></a>
+                    <span class="vk-post-time"><%= post.createdAt %></span>
+                </div>
+            </div>
+            <div class="vk-post-content">
+                <%= post.content %>
+            </div>
+            <div class="vk-post-actions">
+                <a href="#" onclick="likePost(<%= post.id %>)">
+                    <i class="fas fa-thumbs-up"></i> Мне нравится <%= post.likes && post.likes.length > 0 ? '(' + post.likes.length + ')' : '' %>
+                </a>
+                <a href="#" onclick="showComments(<%= post.id %>)">
+                    <i class="fas fa-comment"></i> Комментарии <%= post.comments && post.comments.length > 0 ? '(' + post.comments.length + ')' : '' %>
+                </a>
+                <a href="#" onclick="sharePost(<%= post.id %>)">
+                    <i class="fas fa-share"></i> Поделиться
+                </a>
+                <% if (user && user.id === post.author.id) { %>
+                <a href="#" onclick="deletePost(<%= post.id %>)">
+                    <i class="fas fa-trash"></i> Удалить
+                </a>
+                <% } %>
+            </div>
+        </div>
+        <% }); %>
+        
+        <% if (posts.length === 0) { %>
+        <div class="vk-empty-state">
+            <i class="fas fa-newspaper"></i>
+            <p>Нет записей</p>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<script>
+function addFriend(userId) {
+    fetch(`/friends/add/${userId}`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    });
+}
+
+function removeFriend(userId) {
+    if (confirm('Вы уверены, что хотите удалить этого пользователя из друзей?')) {
+        fetch(`/friends/remove/${userId}`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+
+function likePost(postId) {
+    fetch(`/posts/${postId}/like`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    });
+}
+
+function showComments(postId) {
+    const commentsDiv = document.getElementById(`comments-${postId}`);
+    if (commentsDiv) {
+        commentsDiv.style.display = commentsDiv.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+function sharePost(postId) {
+    if (navigator.share) {
+        navigator.share({
+            title: 'Поделиться записью',
+            url: window.location.origin + '/posts/' + postId
+        });
+    } else {
+        navigator.clipboard.writeText(window.location.origin + '/posts/' + postId);
+        alert('Ссылка скопирована в буфер обмена');
+    }
+}
+
+function deletePost(postId) {
+    if (confirm('Вы уверены, что хотите удалить эту запись?')) {
+        fetch(`/posts/${postId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+</script>

@@ -1,116 +1,159 @@
-<div class="friends-container">
-    <div class="friends-header">
-        <h1>Friends</h1>
-        <div class="friends-actions">
-            <button class="btn btn-primary" onclick="showFindFriendsModal()">
-                Find Friends
-            </button>
-            <button class="btn btn-outline" onclick="showFriendRequests()">
-                Friend Requests (<%= friendRequests.length %>)
-            </button>
+<div class="vk-content-box">
+    <h2><i class="fas fa-user-friends"></i> Друзья</h2>
+    
+    <!-- Friend Requests -->
+    <% if (friendRequests.length > 0) { %>
+    <div class="vk-friend-requests">
+        <h3><i class="fas fa-user-plus"></i> Заявки в друзья (<%= friendRequests.length %>)</h3>
+        <% friendRequests.forEach(request => { %>
+        <div class="vk-friend-request">
+            <div class="vk-friend-request-avatar">
+                <% if (request.avatar) { %>
+                    <img src="<%= request.avatar %>" alt="<%= request.firstName %> <%= request.lastName %>" style="width: 50px; height: 50px; border-radius: 2px; object-fit: cover;">
+                <% } else { %>
+                    <i class="fas fa-user"></i>
+                <% } %>
+            </div>
+            <div class="vk-friend-request-info">
+                <a href="/profile/<%= request.id %>" class="vk-friend-request-name"><%= request.firstName %> <%= request.lastName %></a>
+                <p class="vk-friend-request-time"><%= request.createdAt %></p>
+            </div>
+            <div class="vk-friend-request-actions">
+                <button class="vk-btn" onclick="acceptFriendRequest(<%= request.id %>)">
+                    <i class="fas fa-check"></i> Принять
+                </button>
+                <button class="vk-btn vk-btn-secondary" onclick="rejectFriendRequest(<%= request.id %>)">
+                    <i class="fas fa-times"></i> Отклонить
+                </button>
+            </div>
         </div>
+        <% }); %>
+    </div>
+    <hr style="margin: 15px 0; border: none; border-top: 1px solid #E8EBEE;">
+    <% } %>
+    
+    <!-- Search Friends -->
+    <div class="vk-friends-search">
+        <form action="/friends" method="GET">
+            <div class="vk-form-group">
+                <input type="text" name="search" class="vk-form-control" placeholder="Поиск друзей..." value="<%= typeof search !== 'undefined' ? search : '' %>">
+            </div>
+            <button type="submit" class="vk-btn">
+                <i class="fas fa-search"></i> Поиск
+            </button>
+        </form>
     </div>
     
-    <% if (friendRequests.length > 0) { %>
-    <div class="friend-requests-section">
-        <h2>Friend Requests</h2>
-        <div class="friend-requests-list">
-            <% friendRequests.forEach(request => { %>
-            <div class="friend-request-card">
-                <div class="request-info">
-                    <img src="<%= request.user.avatar || '/images/default-avatar.png' %>" 
-                         alt="<%= request.user.firstName %> <%= request.user.lastName %>" 
-                         class="request-avatar">
-                    <div class="request-details">
-                        <h3><%= request.user.firstName %> <%= request.user.lastName %></h3>
-                        <p>Sent <%= formatRelativeTime(request.createdAt) %></p>
-                    </div>
-                </div>
-                <div class="request-actions">
-                    <button class="btn btn-primary" onclick="acceptFriend(<%= request.userId %>)">
-                        Accept
-                    </button>
-                    <button class="btn btn-outline" onclick="rejectFriend(<%= request.userId %>)">
-                        Reject
-                    </button>
-                </div>
+    <!-- Friends List -->
+    <% if (friends.length > 0) { %>
+    <div class="vk-friends-grid">
+        <% friends.forEach(friend => { %>
+        <div class="vk-friend-item">
+            <div class="vk-friend-avatar">
+                <% if (friend.avatar) { %>
+                    <img src="<%= friend.avatar %>" alt="<%= friend.firstName %> <%= friend.lastName %>" style="width: 50px; height: 50px; border-radius: 2px; object-fit: cover;">
+                <% } else { %>
+                    <i class="fas fa-user"></i>
+                <% } %>
             </div>
-            <% }); %>
+            <div class="vk-friend-info">
+                <a href="/profile/<%= friend.id %>" class="vk-friend-name"><%= friend.firstName %> <%= friend.lastName %></a>
+                <p class="vk-friend-mutual"><%= friend.mutualFriends || 0 %> общих друзей</p>
+                <p class="vk-friend-status <%= friend.isOnline ? 'vk-online' : 'vk-offline' %>">
+                    <i class="fas fa-circle"></i> <%= friend.isOnline ? 'Онлайн' : 'Офлайн' %>
+                </p>
+            </div>
+            <div class="vk-friend-actions">
+                <a href="/messages/new/<%= friend.id %>" class="vk-btn vk-btn-small">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <button class="vk-btn vk-btn-small vk-btn-secondary" onclick="removeFriend(<%= friend.id %>)">
+                    <i class="fas fa-user-minus"></i>
+                </button>
+            </div>
         </div>
+        <% }); %>
+    </div>
+    
+    <!-- Pagination -->
+    <% if (totalPages > 1) { %>
+    <div class="vk-pagination">
+        <% if (currentPage > 1) { %>
+            <a href="/friends?page=<%= currentPage - 1 %><%= search ? '&search=' + search : '' %>" class="vk-btn vk-btn-secondary">
+                <i class="fas fa-chevron-left"></i> Назад
+            </a>
+        <% } %>
+        
+        <span class="vk-pagination-info">
+            Страница <%= currentPage %> из <%= totalPages %>
+        </span>
+        
+        <% if (currentPage < totalPages) { %>
+            <a href="/friends?page=<%= currentPage + 1 %><%= search ? '&search=' + search : '' %>" class="vk-btn">
+                Вперед <i class="fas fa-chevron-right"></i>
+            </a>
+        <% } %>
     </div>
     <% } %>
     
-    <div class="friends-section">
-        <h2>All Friends (<%= friends.length %>)</h2>
-        
-        <% if (friends.length > 0) { %>
-        <div class="friends-grid">
-            <% friends.forEach(friend => { %>
-            <div class="friend-card">
-                <img src="<%= friend.avatar || '/images/default-avatar.png' %>" 
-                     alt="<%= friend.firstName %> <%= friend.lastName %>" 
-                     class="friend-avatar">
-                <div class="friend-info">
-                    <h3><%= friend.firstName %> <%= friend.lastName %></h3>
-                    <p class="friend-status">Online</p>
-                </div>
-                <div class="friend-actions">
-                    <button class="btn btn-outline" onclick="viewProfile(<%= friend.id %>)">
-                        View Profile
-                    </button>
-                    <button class="btn btn-outline" onclick="sendMessage(<%= friend.id %>)">
-                        Message
-                    </button>
-                    <button class="btn btn-outline danger" onclick="removeFriend(<%= friend.id %>)">
-                        Remove
-                    </button>
-                </div>
-            </div>
-            <% }); %>
-        </div>
-        
-        <%- include('../partials/pagination', { 
-            baseUrl: '/friends', 
-            currentPage, 
-            totalPages,
-            queryParams: ''
-        }) %>
-        <% } else { %>
-        <div class="empty-state">
-            <h3>No friends yet</h3>
-            <p>Start connecting with people to see them here.</p>
-            <button class="btn btn-primary" onclick="showFindFriendsModal()">
-                Find Friends
-            </button>
-        </div>
+    <% } else { %>
+    <div class="vk-empty-state">
+        <i class="fas fa-user-friends"></i>
+        <p><%= search ? 'Друзья не найдены' : 'У вас пока нет друзей' %></p>
+        <% if (!search) { %>
+        <p><a href="/users">Найти друзей</a></p>
         <% } %>
     </div>
+    <% } %>
 </div>
 
-<!-- Модальное окно для поиска друзей -->
-<div id="findFriendsModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Find Friends</h3>
-            <button class="close-btn" onclick="closeModal('findFriendsModal')">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="search-section">
-                <div class="search-form">
-                    <input type="text" 
-                           id="friendSearch" 
-                           class="form-control" 
-                           placeholder="Search by name or email..."
-                           onkeyup="searchFriends(this.value)">
-                    <button class="btn btn-primary" onclick="searchFriends(document.getElementById('friendSearch').value)">
-                        Search
-                    </button>
-                </div>
-            </div>
-            
-            <div class="search-results" id="friendSearchResults">
-                <p>Enter a name or email to search for friends</p>
-            </div>
-        </div>
-    </div>
-</div>
+<script>
+function acceptFriendRequest(userId) {
+    fetch(`/friends/accept/${userId}`, {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    });
+}
+
+function rejectFriendRequest(userId) {
+    if (confirm('Вы уверены, что хотите отклонить эту заявку?')) {
+        fetch(`/friends/reject/${userId}`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+
+function removeFriend(userId) {
+    if (confirm('Вы уверены, что хотите удалить этого пользователя из друзей?')) {
+        fetch(`/friends/remove/${userId}`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+</script>

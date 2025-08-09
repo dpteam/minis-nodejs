@@ -1,61 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %> - Minis</title>
-    <meta name="description" content="A minimalist social network">
-    
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/auth.css">
 </head>
-<body class="auth-page">
-    <div class="auth-container">
-        <div class="auth-card">
-            <div class="auth-header">
-                <div class="auth-brand">
-                    <span class="brand-icon">🎭</span>
-                    <span class="brand-name">Minis</span>
-                </div>
-                <h1><%= title %></h1>
-                <p class="auth-subtitle"><%= subtitle || '' %></p>
-            </div>
+<body>
+    <!-- VK 2008 Style Auth Container -->
+    <div class="vk-auth-container">
+        <div class="vk-auth-header">
+            <i class="fas fa-users"></i>
+            <h1>Minis</h1>
+        </div>
+        
+        <div class="vk-auth-box">
+            <h2><%= title %></h2>
+            <p class="vk-auth-subtitle"><%= subtitle || '' %></p>
             
-            <% if (messages.success) { %>
-            <div class="alert alert-success">
-                <%= messages.success %>
-            </div>
-            <% } %>
-            
-            <% if (messages.error) { %>
-            <div class="alert alert-error">
-                <%= messages.error %>
+            <%if (messages.success) { %>
+            <div class="vk-alert vk-alert-success">
+                <i class="fas fa-check-circle"></i> <%=messages.success%>
             </div>
             <% } %>
-            
-            <% if (errors && errors.length > 0) { %>
-            <div class="alert alert-error">
-                <ul class="error-list">
-                    <% errors.forEach(error => { %>
-                    <li><%= error.msg %></li>
+            <%if (messages.error) { %>
+            <div class="vk-alert vk-alert-error">
+                <i class="fas fa-exclamation-circle"></i> <%=messages.error%>
+            </div>
+            <% } %>
+            <%if (errors && errors.length>0) { %>
+            <div class="vk-alert vk-alert-error">
+                <i class="fas fa-exclamation-triangle"></i>
+                <ul>
+                    <%errors.forEach(error=> { %>
+                        <li><%=error.msg%></li>
                     <% }); %>
                 </ul>
             </div>
             <% } %>
-
+            
             <%= body %>
             
-            <div class="auth-footer">
-                <% if (title === 'Login') { %>
-                <p>Don't have an account? <a href="/register">Register here</a></p>
-                <p><a href="/forgot-password">Forgot password?</a></p>
+            <div class="vk-auth-links">
+                <%if (title ==='Login') { %>
+                    <p>Нет аккаунта? <a href="/register">Зарегистрируйтесь</a></p>
+                    <p><a href="/forgot-password">Забыли пароль?</a></p>
                 <% } else { %>
-                <p>Already have an account? <a href="/login">Login here</a></p>
+                    <p>Уже есть аккаунт? <a href="/login">Войдите</a></p>
                 <% } %>
             </div>
         </div>
     </div>
-
-    <script src="/js/forms.js"></script>
+    
+    <script>
+        // Auto-hide messages after 5 seconds
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.vk-alert');
+            alerts.forEach(alert => {
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 500);
+            });
+        }, 5000);
+    </script>
 </body>
 </html>

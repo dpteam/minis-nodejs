@@ -1,109 +1,194 @@
-<div class="messages-container">
-    <div class="messages-header">
-        <h1>Messages</h1>
-        <div class="message-actions">
-            <button class="btn btn-primary" onclick="showNewMessageForm()">
-                New Message
-            </button>
-            <div class="filter-dropdown">
-                <button class="btn btn-outline" onclick="toggleFilterMenu()">
-                    Filter ▼
-                </button>
-                <div class="filter-menu" id="filterMenu">
-                    <a href="#" onclick="filterMessages('all')">All Messages</a>
-                    <a href="#" onclick="filterMessages('following')">Following</a>
-                    <a href="#" onclick="filterMessages('mentions')">Mentions</a>
-                </div>
+<div class="vk-content-box">
+    <h2><i class="fas fa-envelope"></i> Сообщения</h2>
+    
+    <div class="vk-messages-container">
+        <!-- Conversations List -->
+        <div class="vk-conversations-list">
+            <div class="vk-conversations-header">
+                <h3><i class="fas fa-comments"></i> Диалоги</h3>
+                <a href="/messages/new" class="vk-btn vk-btn-small">
+                    <i class="fas fa-plus"></i> Новое сообщение
+                </a>
+            </div>
+            
+            <div class="vk-conversations-search">
+                <input type="text" class="vk-form-control" placeholder="Поиск диалогов..." id="searchConversations">
+            </div>
+            
+            <div class="vk-conversations">
+                <% if (conversations.length > 0) { %>
+                    <% conversations.forEach(conversation => { %>
+                    <div class="vk-conversation <%= conversation.id === activeConversationId ? 'vk-active' : '' %>" onclick="loadConversation(<%= conversation.id %>)">
+                        <div class="vk-conversation-avatar">
+                            <% if (conversation.otherUser.avatar) { %>
+                                <img src="<%= conversation.otherUser.avatar %>" alt="<%= conversation.otherUser.firstName %> <%= conversation.otherUser.lastName %>" style="width: 40px; height: 40px; border-radius: 2px; object-fit: cover;">
+                            <% } else { %>
+                                <i class="fas fa-user"></i>
+                            <% } %>
+                            <% if (conversation.unreadCount > 0) { %>
+                                <span class="vk-unread-count"><%= conversation.unreadCount %></span>
+                            <% } %>
+                        </div>
+                        <div class="vk-conversation-info">
+                            <div class="vk-conversation-name"><%= conversation.otherUser.firstName %> <%= conversation.otherUser.lastName %></div>
+                            <div class="vk-conversation-preview"><%= conversation.lastMessage.content.substring(0, 50) %>...</div>
+                            <div class="vk-conversation-time"><%= conversation.lastMessage.createdAt %></div>
+                        </div>
+                    </div>
+                    <% }); %>
+                <% } else { %>
+                    <div class="vk-empty-conversations">
+                        <i class="fas fa-comments"></i>
+                        <p>Нет диалогов</p>
+                        <a href="/messages/new" class="vk-btn">Начать новый диалог</a>
+                    </div>
+                <% } %>
             </div>
         </div>
-    </div>
-    
-    <!-- Форма создания нового сообщения -->
-    <div class="new-message-form" id="newMessageForm" style="display: none;">
-        <form onsubmit="createMessage(event)">
-            <div class="form-group">
-                <textarea name="content" 
-                          class="form-control" 
-                          placeholder="What's on your mind?" 
-                          rows="3"
-                          required></textarea>
-                <div class="message-options">
-                    <div class="option-group">
-                        <label for="messageVisibility">Visibility:</label>
-                        <select name="visibility" id="messageVisibility" class="form-control">
-                            <option value="public">Public</option>
-                            <option value="friends">Friends Only</option>
-                            <option value="private">Private</option>
-                        </select>
-                    </div>
-                    <div class="option-group">
-                        <label for="messageAddressee">Address to:</label>
-                        <input type="text" 
-                               id="messageAddressee" 
-                               name="addresseeId" 
-                               class="form-control" 
-                               placeholder="Search users..."
-                               onkeyup="searchUsers(this.value)">
-                    </div>
-                </div>
-            </div>
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Post Message</button>
-                <button type="button" class="btn btn-outline" onclick="hideNewMessageForm()">
-                    Cancel
-                </button>
-            </div>
-        </form>
-    </div>
-    
-    <!-- Список сообщений -->
-    <div class="messages-list">
-        <% if (messages && messages.length > 0) { %>
-        <% messages.forEach(message => { %>
-        <%- include('../partials/message-card', { message, user }) %>
-        <% }); %>
         
-        <%- include('../partials/pagination', { 
-            baseUrl: '/messages', 
-            currentPage, 
-            totalPages,
-            queryParams: ''
-        }) %>
-        <% } else { %>
-        <div class="empty-state">
-            <h3>No messages yet</h3>
-            <p>Be the first to share something with the community!</p>
-            <button class="btn btn-primary" onclick="showNewMessageForm()">
-                Create Message
-            </button>
+        <!-- Messages Area -->
+        <div class="vk-messages-area">
+            <% if (activeConversation) { %>
+                <div class="vk-messages-header">
+                    <div class="vk-messages-user-info">
+                        <div class="vk-messages-avatar">
+                            <% if (activeConversation.otherUser.avatar) { %>
+                                <img src="<%= activeConversation.otherUser.avatar %>" alt="<%= activeConversation.otherUser.firstName %> <%= activeConversation.otherUser.lastName %>" style="width: 32px; height: 32px; border-radius: 2px; object-fit: cover;">
+                            <% } else { %>
+                                <i class="fas fa-user"></i>
+                            <% } %>
+                        </div>
+                        <div>
+                            <div class="vk-messages-user-name"><%= activeConversation.otherUser.firstName %> <%= activeConversation.otherUser.lastName %></div>
+                            <div class="vk-messages-user-status <%= activeConversation.otherUser.isOnline ? 'vk-online' : 'vk-offline' %>">
+                                <i class="fas fa-circle"></i> <%= activeConversation.otherUser.isOnline ? 'Онлайн' : 'Офлайн' %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="vk-messages-actions">
+                        <a href="/profile/<%= activeConversation.otherUser.id %>" class="vk-btn vk-btn-small">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <button class="vk-btn vk-btn-small vk-btn-secondary" onclick="clearConversation(<%= activeConversation.id %>)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="vk-messages-list" id="messagesList">
+                    <% activeConversation.messages.forEach(message => { %>
+                    <div class="vk-message <%= message.senderId === user.id ? 'vk-message-sent' : 'vk-message-received' %>">
+                        <div class="vk-message-avatar">
+                            <% if (message.sender.avatar) { %>
+                                <img src="<%= message.sender.avatar %>" alt="<%= message.sender.firstName %> <%= message.sender.lastName %>" style="width: 24px; height: 24px; border-radius: 2px; object-fit: cover;">
+                            <% } else { %>
+                                <i class="fas fa-user"></i>
+                            <% } %>
+                        </div>
+                        <div class="vk-message-content">
+                            <div class="vk-message-text"><%= message.content %></div>
+                            <div class="vk-message-time"><%= message.createdAt %></div>
+                        </div>
+                    </div>
+                    <% }); %>
+                </div>
+                
+                <div class="vk-messages-input">
+                    <form id="messageForm" onsubmit="sendMessage(event, <%= activeConversation.id %>)">
+                        <div class="vk-form-group">
+                            <textarea id="messageInput" class="vk-form-control" placeholder="Написать сообщение..." rows="2" required></textarea>
+                        </div>
+                        <button type="submit" class="vk-btn">
+                            <i class="fas fa-paper-plane"></i> Отправить
+                        </button>
+                    </form>
+                </div>
+            <% } else { %>
+                <div class="vk-no-conversation">
+                    <i class="fas fa-comments"></i>
+                    <p>Выберите диалог или начните новый</p>
+                    <a href="/messages/new" class="vk-btn">Новое сообщение</a>
+                </div>
+            <% } %>
         </div>
-        <% } %>
     </div>
 </div>
 
-<!-- Модальное окно для приватных сообщений -->
-<div id="privateMessageModal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Send Message</h3>
-            <button class="close-btn" onclick="closeModal('privateMessageModal')">&times;</button>
-        </div>
-        <div class="modal-body">
-            <form onsubmit="sendPrivateMessage(event)">
-                <div class="form-group">
-                    <label for="privateMessageContent">Message</label>
-                    <textarea id="privateMessageContent" 
-                              class="form-control" 
-                              rows="4" 
-                              required></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Send</button>
-                    <button type="button" class="btn btn-outline" onclick="closeModal('privateMessageModal')">
-                        Cancel
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<script>
+let currentConversationId = <%= activeConversationId || 'null' %>;
+
+function loadConversation(conversationId) {
+    window.location.href = '/messages?conversation=' + conversationId;
+}
+
+function sendMessage(event, conversationId) {
+    event.preventDefault();
+    
+    const input = document.getElementById('messageInput');
+    const content = input.value.trim();
+    
+    if (!content) return;
+    
+    fetch(`/messages/send/${conversationId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({ content })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            input.value = '';
+            // Reload to show new message
+            location.reload();
+        }
+    });
+}
+
+function clearConversation(conversationId) {
+    if (confirm('Вы уверены, что хотите очистить этот диалог?')) {
+        fetch(`/messages/clear/${conversationId}`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+
+// Auto-scroll to bottom of messages
+function scrollToBottom() {
+    const messagesList = document.getElementById('messagesList');
+    if (messagesList) {
+        messagesList.scrollTop = messagesList.scrollHeight;
+    }
+}
+
+// Search conversations
+document.getElementById('searchConversations')?.addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const conversations = document.querySelectorAll('.vk-conversation');
+    
+    conversations.forEach(conversation => {
+        const name = conversation.querySelector('.vk-conversation-name').textContent.toLowerCase();
+        const preview = conversation.querySelector('.vk-conversation-preview').textContent.toLowerCase();
+        
+        if (name.includes(searchTerm) || preview.includes(searchTerm)) {
+            conversation.style.display = 'flex';
+        } else {
+            conversation.style.display = 'none';
+        }
+    });
+});
+
+// Scroll to bottom when page loads
+document.addEventListener('DOMContentLoaded', scrollToBottom);
+</script>

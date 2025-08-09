@@ -1,25 +1,4 @@
-/* ===== Основные стили ===== */
-:root {
-    --primary-color: #3b82f6;
-    --primary-dark: #2563eb;
-    --secondary-color: #64748b;
-    --success-color: #10b981;
-    --error-color: #ef4444;
-    --warning-color: #f59e0b;
-    --background-color: #ffffff;
-    --surface-color: #f8fafc;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --border-color: #e2e8f0;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --radius-sm: 0.375rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 0.75rem;
-    --transition: all 0.2s ease;
-}
-
+/* VK 2008 Style - Reset and Base */
 * {
     margin: 0;
     padding: 0;
@@ -27,1146 +6,975 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-primary);
-    line-height: 1.6;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    background: #DAE1E8;
+    color: #000;
+    line-height: 1.3;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-/* ===== Навигация ===== */
-.navbar {
-    background-color: var(--background-color);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.95);
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-}
-
-.nav-brand {
-    display: flex;
-    align-items: center;
+a {
+    color: #2B587A;
     text-decoration: none;
 }
 
-.brand-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--text-primary);
+a:hover {
+    text-decoration: underline;
 }
 
-.brand-icon {
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
-}
-
-.brand-name {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-.nav-menu {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: var(--text-secondary);
-    font-weight: 500;
-    transition: var(--transition);
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-sm);
-}
-
-.nav-link:hover {
-    color: var(--primary-color);
-    background-color: var(--surface-color);
-}
-
-.nav-link.admin-link {
-    color: var(--warning-color);
-}
-
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-/* ===== Уведомления ===== */
-.notifications-dropdown {
+/* VK 2008 Header */
+.vk-header {
+    background: #45668E;
+    height: 42px;
+    border-bottom: 1px solid #45668E;
     position: relative;
 }
 
-.notification-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: var(--radius-sm);
-    position: relative;
-    transition: var(--transition);
+.vk-header-content {
+    max-width: 791px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
 }
 
-.notification-btn:hover {
-    background-color: var(--surface-color);
-}
-
-.notification-icon {
-    font-size: 1.25rem;
-}
-
-.notification-badge {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: var(--error-color);
+.vk-logo {
     color: white;
-    font-size: 0.75rem;
-    padding: 0.125rem 0.375rem;
-    border-radius: 9999px;
-    min-width: 1.25rem;
-    text-align: center;
-}
-
-.notification-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: var(--background-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    width: 320px;
-    max-height: 400px;
-    overflow-y: auto;
-    display: none;
-    z-index: 1001;
-}
-
-.notification-menu.active {
-    display: block;
-}
-
-.notification-header {
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.notification-header h3 {
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-.view-all {
-    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 20px;
     text-decoration: none;
-    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.notification-list {
-    max-height: 300px;
-    overflow-y: auto;
+.vk-logo:hover {
+    text-decoration: none;
 }
 
-.notification-item {
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-    transition: var(--transition);
+.vk-nav {
+    display: flex;
+    gap: 15px;
 }
 
-.notification-item:hover {
-    background-color: var(--surface-color);
+.vk-nav-item {
+    color: white;
+    font-size: 11px;
+    padding: 8px 12px;
+    border-radius: 2px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.notification-item.unread {
-    background-color: var(--surface-color);
-    border-left: 3px solid var(--primary-color);
+.vk-nav-item:hover {
+    background: rgba(255,255,255,0.1);
+    text-decoration: none;
 }
 
-/* ===== Профиль пользователя ===== */
-.user-dropdown {
+.vk-user-menu {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.vk-notifications {
     position: relative;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-.user-btn {
+.vk-notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #FF6B6B;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 5px;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+.vk-user-dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.vk-user-info {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: var(--radius-sm);
-    transition: var(--transition);
+    gap: 8px;
+    color: white;
+    font-size: 11px;
 }
 
-.user-btn:hover {
-    background-color: var(--surface-color);
+.vk-user-avatar {
+    width: 24px;
+    height: 24px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
 }
 
-.user-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.user-name {
-    font-weight: 500;
-    color: var(--text-primary);
-}
-
-.user-menu {
+.vk-dropdown-menu {
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: var(--background-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    min-width: 200px;
+    background: white;
+    border: 1px solid #CAD1D8;
+    border-radius: 2px;
+    min-width: 150px;
     display: none;
-    z-index: 1001;
+    z-index: 1000;
+    margin-top: 5px;
 }
 
-.user-menu.active {
+.vk-dropdown-item {
     display: block;
-}
-
-.menu-item {
-    display: block;
-    padding: 0.75rem 1rem;
+    padding: 8px 12px;
+    color: #2B587A;
+    font-size: 11px;
     text-decoration: none;
-    color: var(--text-primary);
-    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.menu-item:hover {
-    background-color: var(--surface-color);
-    color: var(--primary-color);
+.vk-dropdown-item:hover {
+    background: #F5F7FA;
+    text-decoration: none;
 }
 
-.menu-divider {
+.vk-dropdown-divider {
     height: 1px;
-    background-color: var(--border-color);
-    margin: 0.5rem 0;
+    background: #E8EBEE;
+    margin: 5px 0;
 }
 
-.menu-item.logout {
-    color: var(--error-color);
+/* VK 2008 Container */
+.vk-container {
+    max-width: 791px;
+    margin: 10px auto;
+    display: flex;
+    gap: 10px;
 }
 
-.menu-item.logout:hover {
-    background-color: #fee2e2;
+/* VK 2008 Sidebar */
+.vk-sidebar {
+    width: 140px;
+    flex-shrink: 0;
 }
 
-/* ===== Кнопки ===== */
-.btn {
+.vk-sidebar-section {
+    background: white;
+    border: 1px solid #CAD1D8;
+    border-radius: 2px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.vk-sidebar-section h3 {
+    font-size: 11px;
+    color: #45668E;
+    margin-bottom: 8px;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.vk-sidebar-section ul {
+    list-style: none;
+}
+
+.vk-sidebar-section li {
+    margin-bottom: 5px;
+}
+
+.vk-sidebar-section a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: #2B587A;
+}
+
+.vk-sidebar-section a:hover {
+    text-decoration: underline;
+}
+
+.vk-sidebar-section p {
+    font-size: 11px;
+    color: #666;
+}
+
+/* VK 2008 Main Content */
+.vk-main-content {
+    flex: 1;
+}
+
+.vk-content-box {
+    background: white;
+    border: 1px solid #CAD1D8;
+    border-radius: 2px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.vk-content-box h2 {
+    font-size: 14px;
+    color: #45668E;
+    margin-bottom: 10px;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* VK 2008 Right Sidebar */
+.vk-right-sidebar {
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.vk-ad-placeholder {
+    background: #f0f0f0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 11px;
+    border-radius: 2px;
+}
+
+/* VK 2008 Forms */
+.vk-form-group {
+    margin-bottom: 10px;
+}
+
+.vk-form-group label {
+    display: block;
+    font-size: 11px;
+    color: #45668E;
+    margin-bottom: 3px;
+}
+
+.vk-form-control {
+    width: 100%;
+    padding: 5px 8px;
+    border: 1px solid #C0CAD5;
+    border-radius: 2px;
+    font-size: 11px;
+    font-family: Arial, sans-serif;
+}
+
+.vk-form-control:focus {
+    outline: none;
+    border-color: #45668E;
+}
+
+textarea.vk-form-control {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.vk-form-group small {
+    font-size: 10px;
+    color: #666;
+    margin-top: 2px;
+    display: block;
+}
+
+/* VK 2008 Buttons */
+.vk-btn {
+    background: #45668E;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 2px;
+    font-size: 11px;
+    cursor: pointer;
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
+    gap: 5px;
     justify-content: center;
-    padding: 0.5rem 1rem;
-    border: 1px solid transparent;
-    border-radius: var(--radius-sm);
-    font-weight: 500;
+}
+
+.vk-btn:hover {
+    background: #3A5A7C;
     text-decoration: none;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 0.875rem;
-    gap: 0.5rem;
 }
 
-.btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
+.vk-btn-secondary {
+    background: #E1E5EC;
+    color: #45668E;
 }
 
-.btn-primary:hover {
-    background-color: var(--primary-dark);
-    border-color: var(--primary-dark);
+.vk-btn-secondary:hover {
+    background: #D1D5DC;
 }
 
-.btn-outline {
-    background-color: transparent;
-    color: var(--text-primary);
-    border-color: var(--border-color);
+.vk-btn-small {
+    padding: 4px 8px;
+    font-size: 10px;
 }
 
-.btn-outline:hover {
-    background-color: var(--surface-color);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
+/* VK 2008 Posts */
+.vk-post {
+    border-bottom: 1px solid #E8EBEE;
+    padding: 10px 0;
 }
 
-.btn-danger {
-    background-color: var(--error-color);
-    color: white;
-    border-color: var(--error-color);
+.vk-post:last-child {
+    border-bottom: none;
 }
 
-.btn-danger:hover {
-    background-color: #dc2626;
-    border-color: #dc2626;
-}
-
-.btn-success {
-    background-color: var(--success-color);
-    color: white;
-    border-color: var(--success-color);
-}
-
-.btn-success:hover {
-    background-color: #059669;
-    border-color: #059669;
-}
-
-.btn-warning {
-    background-color: var(--warning-color);
-    color: white;
-    border-color: var(--warning-color);
-}
-
-.btn-warning:hover {
-    background-color: #d97706;
-    border-color: #d97706;
-}
-
-.btn-block {
-    display: flex;
-    width: 100%;
-}
-
-.btn-sm {
-    padding: 0.25rem 0.75rem;
-    font-size: 0.75rem;
-}
-
-.btn-lg {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-}
-
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* ===== Формы ===== */
-.form-group {
-    margin-bottom: 1rem;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: var(--text-primary);
-}
-
-.form-control {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    font-size: 0.875rem;
-    transition: var(--transition);
-    background-color: var(--background-color);
-    color: var(--text-primary);
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-}
-
-.form-control:invalid {
-    border-color: var(--error-color);
-}
-
-textarea.form-control {
-    resize: vertical;
-    min-height: 100px;
-}
-
-select.form-control {
-    cursor: pointer;
-}
-
-.form-help {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    margin-top: 0.25rem;
-}
-
-.char-counter {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    text-align: right;
-    margin-top: 0.25rem;
-}
-
-/* ===== Чекбоксы и радио-кнопки ===== */
-.checkbox-group, .radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.checkbox-label, .radio-label {
+.vk-post-header {
     display: flex;
     align-items: center;
-    cursor: pointer;
-    font-size: 0.875rem;
+    margin-bottom: 8px;
 }
 
-.checkbox-label input, .radio-label input {
-    margin-right: 0.5rem;
-}
-
-.checkmark, .radio-checkmark {
-    width: 1rem;
-    height: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    margin-right: 0.5rem;
-    position: relative;
-    transition: var(--transition);
-}
-
-.radio-checkmark {
-    border-radius: 50%;
-}
-
-.checkbox-label input:checked + .checkmark,
-.radio-label input:checked + .radio-checkmark {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.checkbox-label input:checked + .checkmark::after {
-    content: '✓';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 0.75rem;
-}
-
-.radio-label input:checked + .radio-checkmark::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 0.375rem;
-    height: 0.375rem;
-    background-color: white;
-    border-radius: 50%;
-}
-
-/* ===== Алерты ===== */
-.alert {
-    padding: 0.75rem 1rem;
-    border-radius: var(--radius-sm);
-    margin-bottom: 1rem;
-    border: 1px solid transparent;
-}
-
-.alert-success {
-    background-color: #d1fae5;
-    border-color: #6ee7b7;
-    color: #065f46;
-}
-
-.alert-error {
-    background-color: #fee2e2;
-    border-color: #fca5a5;
-    color: #991b1b;
-}
-
-.alert-warning {
-    background-color: #fef3c7;
-    border-color: #fcd34d;
-    color: #92400e;
-}
-
-.alert-info {
-    background-color: #dbeafe;
-    border-color: #93c5fd;
-    color: #1e40af;
-}
-
-.error-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.error-list li {
-    margin-bottom: 0.25rem;
-}
-
-/* ===== Карточки ===== */
-.card {
-    background-color: var(--background-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-sm);
-}
-
-.card-header {
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.card-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.card-subtitle {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-}
-
-.card-body {
-    color: var(--text-primary);
-}
-
-.card-footer {
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
+.vk-post-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+    margin-right: 8px;
+    background: #45668E;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    flex-shrink: 0;
 }
 
-/* ===== Сообщения ===== */
-.message-card {
-    background-color: var(--background-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition);
+.vk-post-author {
+    font-weight: bold;
+    color: #2B587A;
 }
 
-.message-card:hover {
-    box-shadow: var(--shadow-md);
+.vk-post-time {
+    color: #999;
+    margin-left: 8px;
 }
 
-.message-header {
+.vk-post-content {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.vk-post-actions {
     display: flex;
-    justify-content: space-between;
+    gap: 15px;
+    font-size: 11px;
+}
+
+.vk-post-actions a {
+    color: #2B587A;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+/* VK 2008 Comments */
+.vk-comments {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #E8EBEE;
+}
+
+.vk-comment {
+    margin-bottom: 10px;
+    padding-left: 40px;
+}
+
+.vk-comment:last-child {
+    margin-bottom: 0;
+}
+
+.vk-comment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.vk-comment-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    margin-right: 8px;
+    background: #45668E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.vk-comment-author {
+    font-weight: bold;
+    color: #2B587A;
+    font-size: 11px;
+}
+
+.vk-comment-time {
+    color: #999;
+    margin-left: 8px;
+    font-size: 10px;
+}
+
+.vk-comment-content {
+    margin-bottom: 5px;
+    line-height: 1.4;
+    font-size: 11px;
+}
+
+.vk-comment-actions {
+    font-size: 10px;
+}
+
+.vk-comment-form {
+    margin-top: 10px;
+}
+
+/* VK 2008 Profile */
+.vk-profile-header {
+    display: flex;
     align-items: flex-start;
-    margin-bottom: 1rem;
+    margin-bottom: 20px;
 }
 
-.message-author {
+.vk-profile-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 2px;
+    margin-right: 20px;
+    background: #45668E;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    justify-content: center;
+    color: white;
+    font-size: 36px;
+    flex-shrink: 0;
 }
 
-.author-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
+.vk-profile-info h2 {
+    font-size: 16px;
+    color: #45668E;
+    margin-bottom: 10px;
+    font-weight: normal;
 }
 
-.author-info {
+.vk-profile-info p {
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: #666;
+}
+
+.vk-profile-actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* VK 2008 Friends */
+.vk-friends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.vk-friend-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #E8EBEE;
+    border-radius: 2px;
+    background: white;
+}
+
+.vk-friend-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 2px;
+    margin-right: 10px;
+    background: #45668E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.vk-friend-info {
+    flex: 1;
+}
+
+.vk-friend-name {
+    font-weight: bold;
+    color: #2B587A;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.vk-friend-mutual {
+    color: #666;
+    font-size: 10px;
+}
+
+.vk-friend-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.vk-friend-requests {
+    margin-bottom: 20px;
+}
+
+.vk-friend-request {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #E8EBEE;
+    border-radius: 2px;
+    background: white;
+    margin-bottom: 10px;
+}
+
+.vk-friend-request-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 2px;
+    margin-right: 10px;
+    background: #45668E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.vk-friend-request-info {
+    flex: 1;
+}
+
+.vk-friend-request-name {
+    font-weight: bold;
+    color: #2B587A;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.vk-friend-request-time {
+    color: #666;
+    font-size: 10px;
+}
+
+.vk-friend-request-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.vk-friends-search {
+    margin-bottom: 20px;
+}
+
+.vk-online {
+    color: #4CAF50;
+}
+
+.vk-offline {
+    color: #999;
+}
+
+/* VK 2008 Messages */
+.vk-messages-container {
+    display: flex;
+    gap: 10px;
+    height: 500px;
+}
+
+.vk-conversations-list {
+    width: 300px;
+    border: 1px solid #CAD1D8;
+    border-radius: 2px;
+    background: white;
     display: flex;
     flex-direction: column;
 }
 
-.author-name {
-    font-weight: 600;
-    color: var(--text-primary);
-    text-decoration: none;
-}
-
-.author-name:hover {
-    color: var(--primary-color);
-}
-
-.message-time {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-}
-
-.message-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.action-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.25rem;
-    border-radius: var(--radius-sm);
-    transition: var(--transition);
-    font-size: 1rem;
-}
-
-.action-btn:hover {
-    background-color: var(--surface-color);
-}
-
-.like-btn.liked {
-    color: var(--error-color);
-}
-
-.message-content {
-    color: var(--text-primary);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-}
-
-.message-mentions, .message-hashtags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.mention-tag, .hashtag-tag {
-    background-color: var(--surface-color);
-    color: var(--primary-color);
-    padding: 0.25rem 0.5rem;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    font-size: 0.75rem;
-    transition: var(--transition);
-}
-
-.mention-tag:hover, .hashtag-tag:hover {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.message-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.message-visibility {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-}
-
-/* ===== Пагинация ===== */
-.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 2rem 0;
-}
-
-.pagination-link {
-    padding: 0.5rem 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    color: var(--text-primary);
-    transition: var(--transition);
-}
-
-.pagination-link:hover {
-    background-color: var(--surface-color);
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-}
-
-.pagination-link.active {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    color: white;
-}
-
-.pagination-link.dots {
-    border: none;
-    cursor: default;
-}
-
-.pagination-link.dots:hover {
-    background-color: transparent;
-    color: var(--text-primary);
-}
-
-/* ===== Основной контент ===== */
-.main-content {
-    min-height: calc(100vh - 64px - 200px);
-    padding: 2rem 0;
-}
-
-.page-header {
-    margin-bottom: 2rem;
-}
-
-.header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
+.vk-conversations-header {
+    padding: 10px;
+    border-bottom: 1px solid #E8EBEE;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.header-content h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 0.25rem;
-}
-
-.page-subtitle {
-    color: var(--text-secondary);
-    font-size: 1rem;
-}
-
-.header-actions {
-    display: flex;
-    gap: 1rem;
-}
-
-/* ===== Футер ===== */
-.footer {
-    background-color: var(--surface-color);
-    border-top: 1px solid var(--border-color);
-    padding: 3rem 0 1rem;
-    margin-top: 4rem;
-}
-
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.footer-section h4 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--text-primary);
-}
-
-.footer-section p {
-    color: var(--text-secondary);
-    line-height: 1.6;
-}
-
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-section ul li a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.footer-section ul li a:hover {
-    color: var(--primary-color);
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
-    color: var(--text-secondary);
-}
-
-/* ===== Пустые состояния ===== */
-.empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    background-color: var(--surface-color);
-    border-radius: var(--radius-md);
-    border: 2px dashed var(--border-color);
-}
-
-.empty-state h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 1rem;
-}
-
-.empty-state p {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-}
-
-/* ===== Модальные окна ===== */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+.vk-conversations-header h3 {
+    font-size: 12px;
+    color: #45668E;
+    font-weight: normal;
     display: flex;
     align-items: center;
-    justify-content: center;
-    z-index: 2000;
+    gap: 5px;
 }
 
-.modal-content {
-    background-color: var(--background-color);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    max-width: 500px;
-    width: 90%;
-    max-height: 90vh;
+.vk-conversations-search {
+    padding: 10px;
+    border-bottom: 1px solid #E8EBEE;
+}
+
+.vk-conversations {
+    flex: 1;
     overflow-y: auto;
 }
 
-.modal-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+.vk-conversation {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #E8EBEE;
+    cursor: pointer;
+}
+
+.vk-conversation:hover {
+    background: #F5F7FA;
+}
+
+.vk-conversation.vk-active {
+    background: #E1E5EC;
+}
+
+.vk-conversation-avatar {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    margin-right: 10px;
+    background: #45668E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.vk-unread-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #FF6B6B;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 5px;
+    font-size: 9px;
+    font-weight: bold;
+}
+
+.vk-conversation-info {
+    flex: 1;
+}
+
+.vk-conversation-name {
+    font-weight: bold;
+    color: #2B587A;
+    font-size: 11px;
+    margin-bottom: 2px;
+}
+
+.vk-conversation-preview {
+    color: #666;
+    font-size: 10px;
+    margin-bottom: 2px;
+}
+
+.vk-conversation-time {
+    color: #999;
+    font-size: 9px;
+}
+
+.vk-messages-area {
+    flex: 1;
+    border: 1px solid #CAD1D8;
+    border-radius: 2px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.vk-messages-header {
+    padding: 10px;
+    border-bottom: 1px solid #E8EBEE;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.modal-header h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text-secondary);
-    padding: 0.25rem;
-    border-radius: var(--radius-sm);
-    transition: var(--transition);
-}
-
-.close-btn:hover {
-    background-color: var(--surface-color);
-    color: var(--text-primary);
-}
-
-.modal-body {
-    padding: 1.5rem;
-}
-
-.modal-footer {
-    padding: 1.5rem;
-    border-top: 1px solid var(--border-color);
+.vk-messages-user-info {
     display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+    align-items: center;
 }
 
-/* ===== Адаптивность ===== */
-@media (max-width: 768px) {
-    .nav-container {
-        flex-wrap: wrap;
-        height: auto;
-        padding: 0.5rem 1rem;
-    }
-    
-    .nav-menu {
-        order: 3;
-        width: 100%;
-        margin-top: 0.5rem;
-        gap: 1rem;
-    }
-    
-    .nav-actions {
-        order: 2;
-    }
-    
-    .nav-brand {
-        order: 1;
-    }
-    
-    .header-container {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-    
-    .header-actions {
-        width: 100%;
-        justify-content: stretch;
-    }
-    
-    .header-actions .btn {
-        flex: 1;
-    }
-    
-    .modal-content {
-        margin: 1rem;
-        width: calc(100% - 2rem);
-    }
-    
-    .notification-menu {
-        width: calc(100vw - 2rem);
-        right: 1rem;
-    }
-    
-    .user-menu {
-        right: 1rem;
-        min-width: calc(100vw - 2rem);
-    }
-    
-    .footer-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    
-    .message-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-    }
-    
-    .message-actions {
-        align-self: flex-end;
-    }
-    
-    .form-row {
-        flex-direction: column;
-        gap: 0;
-    }
+.vk-messages-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 2px;
+    margin-right: 10px;
+    background: #45668E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    flex-shrink: 0;
 }
 
-@media (max-width: 480px) {
-    .container {
-        padding: 0 0.5rem;
-    }
-    
-    .btn {
-        padding: 0.375rem 0.75rem;
-        font-size: 0.75rem;
-    }
-    
-    .card {
-        padding: 1rem;
-    }
-    
-    .message-card {
-        padding: 1rem;
-    }
-    
-    .author-avatar {
-        width: 32px;
-        height: 32px;
-    }
-    
-    .empty-state {
-        padding: 2rem 1rem;
-    }
+.vk-messages-user-name {
+    font-weight: bold;
+    color: #2B587A;
+    font-size: 11px;
 }
 
-/* ===== Утилиты ===== */
-.text-center {
+.vk-messages-user-status {
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.vk-messages-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.vk-messages-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.vk-message {
+    display: flex;
+    align-items: flex-start;
+    max-width: 70%;
+}
+
+.vk-message-sent {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.vk-message-received {
+    align-self: flex-start;
+}
+
+.vk-message-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 2px;
+    margin: 0 8px;
+    background: #45668E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.vk-message-content {
+    background: #F5F7FA;
+    padding: 8px 12px;
+    border-radius: 2px;
+    border: 1px solid #E8EBEE;
+}
+
+.vk-message-sent .vk-message-content {
+    background: #E1E5EC;
+}
+
+.vk-message-text {
+    font-size: 11px;
+    line-height: 1.4;
+    margin-bottom: 5px;
+}
+
+.vk-message-time {
+    font-size: 9px;
+    color: #999;
+}
+
+.vk-messages-input {
+    padding: 10px;
+    border-top: 1px solid #E8EBEE;
+}
+
+.vk-no-conversation {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+}
+
+.vk-no-conversation i {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #CAD1D8;
+}
+
+.vk-empty-conversations {
     text-align: center;
+    padding: 40px 20px;
+    color: #666;
 }
 
-.text-left {
-    text-align: left;
+.vk-empty-conversations i {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #CAD1D8;
 }
 
-.text-right {
-    text-align: right;
-}
-
-.mb-1 { margin-bottom: 0.25rem; }
-.mb-2 { margin-bottom: 0.5rem; }
-.mb-3 { margin-bottom: 0.75rem; }
-.mb-4 { margin-bottom: 1rem; }
-.mb-5 { margin-bottom: 1.25rem; }
-
-.mt-1 { margin-top: 0.25rem; }
-.mt-2 { margin-top: 0.5rem; }
-.mt-3 { margin-top: 0.75rem; }
-.mt-4 { margin-top: 1rem; }
-.mt-5 { margin-top: 1.25rem; }
-
-.p-1 { padding: 0.25rem; }
-.p-2 { padding: 0.5rem; }
-.p-3 { padding: 0.75rem; }
-.p-4 { padding: 1rem; }
-.p-5 { padding: 1.25rem; }
-
-.d-flex {
+/* VK 2008 Alerts */
+.vk-alert {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 2px;
+    font-size: 11px;
     display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.d-none {
-    display: none;
+.vk-alert-success {
+    background: #E8F5E8;
+    border: 1px solid #4CAF50;
+    color: #2E7D32;
 }
 
-.d-block {
-    display: block;
+.vk-alert-error {
+    background: #FFEBEE;
+    border: 1px solid #F44336;
+    color: #C62828;
 }
 
-.w-100 {
-    width: 100%;
+.vk-alert ul {
+    margin: 0;
+    padding-left: 15px;
 }
 
-.h-100 {
-    height: 100%;
+/* VK 2008 Empty States */
+.vk-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
 }
 
-.position-relative {
-    position: relative;
+.vk-empty-state i {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #CAD1D8;
 }
 
-.position-absolute {
-    position: absolute;
+.vk-empty-state p {
+    margin-bottom: 15px;
 }
 
-.text-primary {
-    color: var(--primary-color);
+/* VK 2008 Pagination */
+.vk-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #E8EBEE;
 }
 
-.text-secondary {
-    color: var(--text-secondary);
+.vk-pagination-info {
+    color: #666;
+    font-size: 11px;
 }
 
-.text-success {
-    color: var(--success-color);
+/* VK 2008 Footer */
+.vk-footer {
+    background: #F5F7FA;
+    border-top: 1px solid #E8EBEE;
+    margin-top: 20px;
+    padding: 20px 0;
 }
 
-.text-error {
-    color: var(--error-color);
+.vk-footer-content {
+    max-width: 791px;
+    margin: 0 auto;
+    display: flex;
+    gap: 40px;
+    padding: 0 10px;
 }
 
-.text-warning {
-    color: var(--warning-color);
+.vk-footer-section {
+    flex: 1;
 }
 
-.bg-primary {
-    background-color: var(--primary-color);
+.vk-footer-section h4 {
+    font-size: 12px;
+    color: #45668E;
+    margin-bottom: 10px;
+    font-weight: normal;
 }
 
-.bg-secondary {
-    background-color: var(--secondary-color);
+.vk-footer-section p {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 8px;
 }
 
-.bg-success {
-    background-color: var(--success-color);
+.vk-footer-section ul {
+    list-style: none;
 }
 
-.bg-error {
-    background-color: var(--error-color);
+.vk-footer-section li {
+    margin-bottom: 5px;
 }
 
-.bg-warning {
-    background-color: var(--warning-color);
+.vk-footer-section a {
+    font-size: 11px;
+    color: #2B587A;
 }
 
-.rounded {
-    border-radius: var(--radius-sm);
+.vk-footer-bottom {
+    max-width: 791px;
+    margin: 20px auto 0;
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #E8EBEE;
+    font-size: 11px;
+    color: #666;
 }
 
-.rounded-md {
-    border-radius: var(--radius-md);
-}
-
-.rounded-lg {
-    border-radius: var(--radius-lg);
-}
-
-.shadow-sm {
-    box-shadow: var(--shadow-sm);
-}
-
-.shadow-md {
-    box-shadow: var(--shadow-md);
-}
-
-.shadow-lg {
-    box-shadow: var(--shadow-lg);
-}
-
-.border {
-    border: 1px solid var(--border-color);
-}
-
-.border-top {
-    border-top: 1px solid var(--border-color);
-}
-
-.border-bottom {
-    border-bottom: 1px solid var(--border-color);
-}
-
-.border-left {
-    border-left: 1px solid var(--border-color);
-}
-
-.border-right {
-    border-right: 1px solid var(--border-color);
-}
-
-.overflow-hidden {
-    overflow: hidden;
-}
-
-.overflow-auto {
-    overflow: auto;
-}
-
-.text-truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.vk-footer-bottom i {
+    color: #FF6B6B;
 }
