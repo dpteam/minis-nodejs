@@ -1,32 +1,27 @@
 const { Sequelize } = require('sequelize');
+const path = require('path');
 
-// Конфигурация базы данных
-const config = {
-  development: {
-    dialect: 'sqlite',
-    storage: './database.sqlite',
-    logging: console.log,
-  },
-  production: {
-    dialect: 'mariadb',
-    host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || 3306,
-    username: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'minis',
-    logging: false,
-  },
-  test: {
-    dialect: 'sqlite',
-    storage: ':memory:',
-    logging: false,
+// Создаем экземпляр Sequelize
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: path.join(__dirname, '../database.sqlite'),
+  logging: process.env.NODE_ENV === 'development' ? console.log : false,
+  define: {
+    timestamps: true,
+    underscored: true,
+  }
+});
+
+// Проверяем подключение к базе данных
+const testConnection = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection to the database has been established successfully.');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
   }
 };
 
-const env = process.env.NODE_ENV || 'development';
-const dbConfig = config[env];
+testConnection();
 
-// Создаем экземпляр Sequelize
-const sequelize = new Sequelize(dbConfig);
-
-module.exports = { sequelize, Sequelize };
+module.exports = sequelize;

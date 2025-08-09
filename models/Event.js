@@ -1,13 +1,13 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const App = sequelize.define('App', {
+const Event = sequelize.define('Event', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
-  name: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -15,17 +15,17 @@ const App = sequelize.define('App', {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  url: {
-    type: DataTypes.STRING,
-    allowNull: true
+  date: {
+    type: DataTypes.DATE,
+    allowNull: false
   },
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false
   }
 }, {
-  tableName: 'apps',
+  tableName: 'events',
   timestamps: true
 });
 
-module.exports = App;
+module.exports = Event;
