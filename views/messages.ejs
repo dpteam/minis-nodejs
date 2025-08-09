@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | VK</title>
+    <link rel="stylesheet" href="/css/vk2008.css">
+</head>
+<body>
+    <div class="vk-container">
+        <!-- Верхняя панель -->
+        <div class="vk-header">
+            <div class="vk-logo">
+                <a href="/">vk</a>
+            </div>
+            <div class="vk-nav">
+                <ul>
+                    <li><a href="/">Моя Страница</a></li>
+                    <li><a href="/friends">Мои Друзья</a></li>
+                    <li><a href="/messages" class="active">Сообщения</a></li>
+                    <li><a href="/photos">Фотографии</a></li>
+                    <li><a href="/groups">Группы</a></li>
+                </ul>
+            </div>
+            <div class="vk-search">
+                <form action="/search" method="get">
+                    <input type="text" name="q" placeholder="Поиск">
+                </form>
+            </div>
+            <div class="vk-user-menu">
+                <% if (user) { %>
+                    <a href="/profile/<%= user.id %>"><%= user.firstName %> <%= user.lastName %></a>
+                    <a href="/logout">Выход</a>
+                <% } else { %>
+                    <a href="/login">Вход</a>
+                    <a href="/register">Регистрация</a>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="vk-content-wrapper">
+            <!-- Левая колонка -->
+            <div class="vk-left-column">
+                <div class="vk-profile-box">
+                    <div class="vk-profile-avatar">
+                        <% if (user.avatar) { %>
+                            <img src="<%= user.avatar %>" alt="Avatar">
+                        <% } else { %>
+                            <div class="no-avatar"></div>
+                        <% } %>
+                    </div>
+                    <div class="vk-profile-info">
+                        <h2><%= user.firstName %> <%= user.lastName %></h2>
+                        <div class="vk-profile-links">
+                            <a href="/edit">Редактировать</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vk-nav-menu">
+                    <ul>
+                        <li><a href="/messages" class="active">Все сообщения</a></li>
+                        <li><a href="/messages/unread">Непрочитанные</a></li>
+                        <li><a href="/messages/sent">Отправленные</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Центральная колонка -->
+            <div class="vk-center-column">
+                <!-- Новое сообщение -->
+                <div class="vk-new-message">
+                    <h3>Новое сообщение</h3>
+                    <form action="/messages/new" method="get">
+                        <input type="text" name="q" placeholder="Кому...">
+                        <button type="submit">Написать</button>
+                    </form>
+                </div>
+
+                <!-- Диалоги -->
+                <div class="vk-dialogs">
+                    <h3>Диалоги</h3>
+                    <div class="vk-dialogs-list">
+                        <% if (dialogs.length > 0) { %>
+                            <% dialogs.forEach(dialog => { %>
+                                <div class="vk-dialog-item">
+                                    <div class="vk-dialog-avatar">
+                                        <% if (dialog.sender.id === user.id && dialog.receiver.avatar) { %>
+                                            <img src="<%= dialog.receiver.avatar %>" alt="<%= dialog.receiver.firstName %> <%= dialog.receiver.lastName %>">
+                                        <% } else if (dialog.sender.avatar) { %>
+                                            <img src="<%= dialog.sender.avatar %>" alt="<%= dialog.sender.firstName %> <%= dialog.sender.lastName %>">
+                                        <% } else { %>
+                                            <div class="no-avatar"></div>
+                                        <% } %>
+                                    </div>
+                                    <div class="vk-dialog-info">
+                                        <div class="vk-dialog-name">
+                                            <% if (dialog.sender.id === user.id) { %>
+                                                <a href="/messages/<%= dialog.receiver.id %>">
+                                                    <%= dialog.receiver.firstName %> <%= dialog.receiver.lastName %>
+                                                </a>
+                                            <% } else { %>
+                                                <a href="/messages/<%= dialog.sender.id %>">
+                                                    <%= dialog.sender.firstName %> <%= dialog.sender.lastName %>
+                                                </a>
+                                            <% } %>
+                                        </div>
+                                        <div class="vk-dialog-preview">
+                                            <%= dialog.content.substring(0, 50) %>...
+                                        </div>
+                                        <div class="vk-dialog-time">
+                                            <%= new Date(dialog.createdAt).toLocaleString('ru-RU') %>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div class="vk-no-dialogs">
+                                <p>У вас нет сообщений</p>
+                                <p><a href="/friends">Найти друзей</a> и начать общение</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая колонка -->
+            <div class="vk-right-column">
+                <div class="vk-online-friends">
+                    <h3>Друзья онлайн</h3>
+                    <div class="vk-online-friends-list">
+                        <div class="vk-online-friend-item">
+                            <div class="vk-online-friend-avatar"></div>
+                            <div class="vk-online-friend-name">Анна Иванова</div>
+                            <div class="vk-online-friend-status">online</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подвал -->
+        <div class="vk-footer">
+            <div class="vk-footer-links">
+                <a href="/">О ВКонтакте</a>
+                <a href="/">Правила</a>
+                <a href="/">Реклама</a>
+                <a href="/">Вакансии</a>
+            </div>
+            <div class="vk-footer-copyright">
+                © 2008 ВКонтакте
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> | VK</title>
+    <link rel="stylesheet" href="/css/vk2008.css">
+</head>
+<body>
+    <div class="vk-container">
+        <!-- Верхняя панель -->
+        <div class="vk-header">
+            <div class="vk-logo">
+                <a href="/">vk</a>
+            </div>
+            <div class="vk-nav">
+                <ul>
+                    <li><a href="/">Моя Страница</a></li>
+                    <li><a href="/friends" class="active">Мои Друзья</a></li>
+                    <li><a href="/messages">Сообщения</a></li>
+                    <li><a href="/photos">Фотографии</a></li>
+                    <li><a href="/groups">Группы</a></li>
+                </ul>
+            </div>
+            <div class="vk-search">
+                <form action="/search" method="get">
+                    <input type="text" name="q" placeholder="Поиск">
+                </form>
+            </div>
+            <div class="vk-user-menu">
+                <% if (user) { %>
+                    <a href="/profile/<%= user.id %>"><%= user.firstName %> <%= user.lastName %></a>
+                    <a href="/logout">Выход</a>
+                <% } else { %>
+                    <a href="/login">Вход</a>
+                    <a href="/register">Регистрация</a>
+                <% } %>
+            </div>
+        </div>
+
+        <div class="vk-content-wrapper">
+            <!-- Левая колонка -->
+            <div class="vk-left-column">
+                <div class="vk-profile-box">
+                    <div class="vk-profile-avatar">
+                        <% if (user.avatar) { %>
+                            <img src="<%= user.avatar %>" alt="Avatar">
+                        <% } else { %>
+                            <div class="no-avatar"></div>
+                        <% } %>
+                    </div>
+                    <div class="vk-profile-info">
+                        <h2><%= user.firstName %> <%= user.lastName %></h2>
+                        <div class="vk-profile-links">
+                            <a href="/edit">Редактировать</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vk-nav-menu">
+                    <ul>
+                        <li><a href="/">Моя Страница</a></li>
+                        <li><a href="/friends" class="active">Мои Друзья</a></li>
+                        <li><a href="/friends/requests">Заявки в друзья</a></li>
+                        <li><a href="/friends/find">Найти друзей</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Центральная колонка -->
+            <div class="vk-center-column">
+                <!-- Поиск друзей -->
+                <div class="vk-friends-search">
+                    <h3>Найти друзей</h3>
+                    <form action="/friends/find" method="get">
+                        <input type="text" name="q" placeholder="Имя или email">
+                        <button type="submit">Найти</button>
+                    </form>
+                </div>
+
+                <!-- Входящие запросы -->
+                <% if (incomingRequests.length > 0) { %>
+                    <div class="vk-friend-requests">
+                        <h3>Заявки в друзья (<%= incomingRequests.length %>)</h3>
+                        <div class="vk-friend-requests-list">
+                            <% incomingRequests.forEach(request => { %>
+                                <div class="vk-friend-request-item">
+                                    <div class="vk-friend-request-avatar">
+                                        <% if (request.user.avatar) { %>
+                                            <img src="<%= request.user.avatar %>" alt="<%= request.user.firstName %> <%= request.user.lastName %>">
+                                        <% } else { %>
+                                            <div class="no-avatar"></div>
+                                        <% } %>
+                                    </div>
+                                    <div class="vk-friend-request-info">
+                                        <div class="vk-friend-request-name">
+                                            <a href="/profile/<%= request.user.id %>">
+                                                <%= request.user.firstName %> <%= request.user.lastName %>
+                                            </a>
+                                        </div>
+                                        <div class="vk-friend-request-actions">
+                                            <a href="/friends/accept/<%= request.user.id %>" class="accept-btn">Принять</a>
+                                            <a href="/friends/reject/<%= request.user.id %>" class="reject-btn">Отклонить</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    </div>
+                <% } %>
+
+                <!-- Список друзей -->
+                <div class="vk-friends-list-box">
+                    <h3>Мои друзья (<%= friends.length %>)</h3>
+                    <div class="vk-friends-grid">
+                        <% if (friends.length > 0) { %>
+                            <% friends.forEach(friendship => { %>
+                                <div class="vk-friend-card">
+                                    <div class="vk-friend-card-avatar">
+                                        <% if (friendship.friend.avatar) { %>
+                                            <img src="<%= friendship.friend.avatar %>" alt="<%= friendship.friend.firstName %> <%= friendship.friend.lastName %>">
+                                        <% } else { %>
+                                            <div class="no-avatar"></div>
+                                        <% } %>
+                                    </div>
+                                    <div class="vk-friend-card-name">
+                                        <a href="/profile/<%= friendship.friend.id %>">
+                                            <%= friendship.friend.firstName %> <%= friendship.friend.lastName %>
+                                        </a>
+                                    </div>
+                                    <div class="vk-friend-card-actions">
+                                        <a href="/messages/<%= friendship.friend.id %>" class="message-btn">Написать сообщение</a>
+                                        <a href="/friends/remove/<%= friendship.friend.id %>" class="remove-btn">Удалить из друзей</a>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div class="vk-no-friends">
+                                <p>У вас пока нет друзей</p>
+                                <p><a href="/friends/find">Найти друзей</a></p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая колонка -->
+            <div class="vk-right-column">
+                <div class="vk-friends-suggestions">
+                    <h3>Возможные друзья</h3>
+                    <div class="vk-friends-suggestions-list">
+                        <div class="vk-friend-suggestion-item">
+                            <div class="vk-friend-suggestion-avatar"></div>
+                            <div class="vk-friend-suggestion-name">Сергей Кузнецов</div>
+                            <div class="vk-friend-suggestion-actions">
+                                <a href="#" class="add-btn">Добавить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подвал -->
+        <div class="vk-footer">
+            <div class="vk-footer-links">
+                <a href="/">О ВКонтакте</a>
+                <a href="/">Правила</a>
+                <a href="/">Реклама</a>
+                <a href="/">Вакансии</a>
+            </div>
+            <div class="vk-footer-copyright">
+                © 2008 ВКонтакте
+            </div>
+        </div>
+    </div>
+</body>
+</html>

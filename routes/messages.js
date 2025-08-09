@@ -1,23 +1,46 @@
 const express = require('express');
 const router = express.Router();
-const messageController = require('../controllers/messageController');
-const { ensureAuthenticated } = require('../middleware/auth');
+const { PrivateMessage, User } = require('../models');
 
-// Публичные сообщения
-router.get('/messages', messageController.getMessages);
-router.post('/messages', ensureAuthenticated, messageController.createMessage);
-router.delete('/messages/:id', ensureAuthenticated, messageController.deleteMessage);
-
-// Ответы на сообщения
-router.post('/messages/:id/reply', ensureAuthenticated, messageController.replyToMessage);
-
-// Лайки/дизлайки
-router.post('/messages/:id/like', ensureAuthenticated, messageController.likeMessage);
-router.post('/messages/:id/dislike', ensureAuthenticated, messageController.dislikeMessage);
-
-// Приватные сообщения
-router.get('/messages/private', ensureAuthenticated, messageController.getPrivateMessages);
-router.get('/messages/private/:userId', ensureAuthenticated, messageController.getPrivateConversation);
-router.post('/messages/private/:userId', ensureAuthenticated, messageController.sendPrivateMessage);
+router.get('/', async (req, res) => {
+  try {
+    if (!req.user) {
+      return res.redirect('/login');
+    }
+    
+    // Получаем диалоги пользователя
+    const dialogs = await PrivateMessage.findAll({
+      where: {
+        [Op.or]: [
+          { senderId: req.user.id },
+          { receiverId: req.user.id }
+        ]
+      },
+      include: [
+        { 
+          model: User, 
+          as: 'sender',
+          attributes: ['id', 'firstName', 'lastName', 'avatar']
+        },
+        { 
+          model: User, 
+          as: 'receiver',
+          attributes: ['id', 'firstName', 'lastName', 'avatar']
+        }
+      ],
+      order: [['createdAt', 'DESC']],
+      group: ['senderId', 'receiverId']
+    });
+    
+    res.render('messages', {
+      title: 'Сообщения',
+      dialogs: dialogs,
+      user: req.user
+    });
+  } catch (error) {
+    console.error('Error loading messages:', error);
+    res.status(500).send('Ошибка загрузки сообщений');
+  }
+});
 
 module.exports = router;

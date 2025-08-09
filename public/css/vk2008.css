@@ -365,3 +365,449 @@ body {
 .vk-footer-links a:hover {
     text-decoration: underline;
 }
+
+/* Стили для страницы профиля */
+.vk-profile-info-box {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    margin-bottom: 10px;
+}
+
+.vk-profile-info-header {
+    background-color: #edeff1;
+    border-bottom: 1px solid #d8dfea;
+    padding: 8px 10px;
+}
+
+.vk-profile-info-header h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+}
+
+.vk-profile-info-content {
+    padding: 10px;
+}
+
+.vk-info-row {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.vk-info-label {
+    width: 100px;
+    color: #777;
+    font-size: 11px;
+}
+
+.vk-info-value {
+    flex: 1;
+    font-size: 11px;
+}
+
+/* Стили для страницы друзей */
+.vk-friends-search {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.vk-friends-search h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.vk-friends-search form {
+    display: flex;
+}
+
+.vk-friends-search input {
+    flex: 1;
+    height: 22px;
+    border: 1px solid #d8dfea;
+    padding: 2px 5px;
+    font-size: 11px;
+}
+
+.vk-friends-search button {
+    margin-left: 5px;
+    background-color: #4a76a8;
+    color: #fff;
+    border: none;
+    padding: 2px 10px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.vk-friend-requests {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    margin-bottom: 10px;
+}
+
+.vk-friend-requests h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    padding: 8px 10px;
+    background-color: #edeff1;
+    border-bottom: 1px solid #d8dfea;
+}
+
+.vk-friend-requests-list {
+    padding: 10px;
+}
+
+.vk-friend-request-item {
+    display: flex;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #edeff1;
+}
+
+.vk-friend-request-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.vk-friend-request-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.vk-friend-request-info {
+    flex: 1;
+}
+
+.vk-friend-request-name {
+    margin-bottom: 5px;
+}
+
+.vk-friend-request-name a {
+    color: #2b587a;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.vk-friend-request-actions {
+    display: flex;
+}
+
+.vk-friend-request-actions a {
+    margin-right: 5px;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    text-decoration: none;
+}
+
+.accept-btn {
+    background-color: #4a76a8;
+    color: #fff;
+}
+
+.reject-btn {
+    background-color: #edeff1;
+    color: #45688e;
+}
+
+.vk-friends-list-box {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+}
+
+.vk-friends-list-box h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    padding: 8px 10px;
+    background-color: #edeff1;
+    border-bottom: 1px solid #d8dfea;
+}
+
+.vk-friends-grid {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.vk-friend-card {
+    text-align: center;
+}
+
+.vk-friend-card-avatar {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 5px;
+}
+
+.vk-friend-card-name {
+    margin-bottom: 5px;
+}
+
+.vk-friend-card-name a {
+    color: #2b587a;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+.vk-friend-card-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.vk-friend-card-actions a {
+    font-size: 10px;
+    margin: 0 2px;
+    color: #45688e;
+    text-decoration: none;
+}
+
+.vk-no-friends {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+}
+
+.vk-no-friends p {
+    margin-bottom: 5px;
+}
+
+.vk-no-friends a {
+    color: #2b587a;
+    text-decoration: none;
+}
+
+/* Стили для страницы сообщений */
+.vk-new-message {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.vk-new-message h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.vk-new-message form {
+    display: flex;
+}
+
+.vk-new-message input {
+    flex: 1;
+    height: 22px;
+    border: 1px solid #d8dfea;
+    padding: 2px 5px;
+    font-size: 11px;
+}
+
+.vk-new-message button {
+    margin-left: 5px;
+    background-color: #4a76a8;
+    color: #fff;
+    border: none;
+    padding: 2px 10px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.vk-dialogs {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+}
+
+.vk-dialogs h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    padding: 8px 10px;
+    background-color: #edeff1;
+    border-bottom: 1px solid #d8dfea;
+}
+
+.vk-dialogs-list {
+    padding: 10px;
+}
+
+.vk-dialog-item {
+    display: flex;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #edeff1;
+}
+
+.vk-dialog-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.vk-dialog-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.vk-dialog-info {
+    flex: 1;
+}
+
+.vk-dialog-name {
+    margin-bottom: 5px;
+}
+
+.vk-dialog-name a {
+    color: #2b587a;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.vk-dialog-preview {
+    color: #000;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.vk-dialog-time {
+    color: #999;
+    font-size: 10px;
+}
+
+.vk-no-dialogs {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+}
+
+.vk-no-dialogs p {
+    margin-bottom: 5px;
+}
+
+.vk-no-dialogs a {
+    color: #2b587a;
+    text-decoration: none;
+}
+
+.vk-online-friends {
+    background-color: #edeff1;
+    border: 1px solid #d8dfea;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.vk-online-friends h3 {
+    font-size: 11px;
+    color: #45688e;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.vk-online-friend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.vk-online-friend-avatar {
+    width: 30px;
+    height: 30px;
+    background-color: #dae1e8;
+    margin-right: 8px;
+    border-radius: 2px;
+}
+
+.vk-online-friend-name {
+    flex: 1;
+    font-size: 10px;
+    color: #2b587a;
+}
+
+.vk-online-friend-status {
+    font-size: 10px;
+    color: #777;
+}
+
+/* Стили для страниц входа и регистрации */
+.vk-login-box, .vk-register-box {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.vk-login-header, .vk-register-header {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.vk-login-header h3, .vk-register-header h3 {
+    font-size: 14px;
+    color: #45688e;
+    font-weight: normal;
+}
+
+.vk-form-group {
+    margin-bottom: 15px;
+}
+
+.vk-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: #45688e;
+}
+
+.vk-form-group input {
+    width: 100%;
+    height: 22px;
+    border: 1px solid #d8dfea;
+    padding: 2px 5px;
+    font-size: 11px;
+}
+
+.vk-form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vk-form-actions button {
+    background-color: #4a76a8;
+    color: #fff;
+    border: none;
+    padding: 5px 15px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.vk-form-links {
+    font-size: 10px;
+}
+
+.vk-form-links a {
+    color: #2b587a;
+    text-decoration: none;
+}
+
+.vk-error-message {
+    background-color: #ffebe8;
+    border: 1px solid #dd3c10;
+    color: #dd3c10;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    font-size: 11px;
+    text-align: center;
+}
