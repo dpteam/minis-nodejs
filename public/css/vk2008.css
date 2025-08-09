@@ -811,3 +811,167 @@ body {
     font-size: 11px;
     text-align: center;
 }
+
+/* Стили для форм входа и регистрации */
+.vk-login-box, .vk-register-box {
+    background-color: #fff;
+    border: 1px solid #d8dfea;
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.vk-login-header, .vk-register-header {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.vk-login-header h3, .vk-register-header h3 {
+    font-size: 14px;
+    color: #45688e;
+    font-weight: normal;
+}
+
+.vk-form-group {
+    margin-bottom: 15px;
+}
+
+.vk-form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: #45688e;
+}
+
+.vk-form-group input {
+    width: 100%;
+    height: 22px;
+    border: 1px solid #d8dfea;
+    padding: 2px 5px;
+    font-size: 11px;
+}
+
+.vk-form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.vk-form-actions button {
+    background-color: #4a76a8;
+    color: #fff;
+    border: none;
+    padding: 5px 15px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.vk-form-links {
+    font-size: 10px;
+}
+
+.vk-form-links a {
+    color: #2b587a;
+    text-decoration: none;
+}
+
+.vk-error-message {
+    background-color: #ffebe8;
+    border: 1px solid #dd3c10;
+    color: #dd3c10;
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    font-size: 11px;
+    text-align: center;
+}
+
+/* Дополнительные стили для страниц */
+.vk-friends-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.vk-friend-card {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #edeff1;
+}
+
+.vk-friend-card-avatar {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 5px;
+    background-color: #dae1e8;
+    border-radius: 3px;
+}
+
+.vk-friend-card-name {
+    margin-bottom: 5px;
+}
+
+.vk-friend-card-name a {
+    color: #2b587a;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+.vk-friend-card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.vk-friend-card-actions a {
+    font-size: 10px;
+    color: #45688e;
+    text-decoration: none;
+    padding: 2px 5px;
+    border: 1px solid #d8dfea;
+    border-radius: 2px;
+}
+
+.vk-friend-card-actions a:hover {
+    background-color: #edeff1;
+}
+
+.vk-dialog-item {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid #edeff1;
+}
+
+.vk-dialog-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    background-color: #dae1e8;
+    border-radius: 3px;
+}
+
+.vk-dialog-info {
+    flex: 1;
+}
+
+.vk-dialog-name {
+    margin-bottom: 5px;
+}
+
+.vk-dialog-name a {
+    color: #2b587a;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.vk-dialog-preview {
+    color: #000;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.vk-dialog-time {
+    color: #999;
+    font-size: 10px;
+}

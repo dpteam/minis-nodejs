@@ -1,55 +1,64 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
+const { Model, DataTypes } = require('sequelize');
 
-const Notification = sequelize.define('Notification', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Users',
-      key: 'id',
+module.exports = (sequelize, DataTypes) => {
+  class Notification extends Model {
+    static associate(models) {
+      Notification.belongsTo(models.User, { 
+        foreignKey: 'userId', 
+        as: 'user'
+      });
+      
+      Notification.belongsTo(models.User, { 
+        foreignKey: 'actorId', 
+        as: 'actor'
+      });
+      
+      Notification.belongsTo(models.Message, { 
+        foreignKey: 'messageId', 
+        as: 'message'
+      });
     }
-  },
-  type: {
-    type: DataTypes.ENUM(
-      'message', 
-      'like', 
-      'friend_request', 
-      'mention', 
-      'comment', 
-      'system'
-    ),
-    allowNull: false,
-  },
-  title: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
-  message: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  isRead: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  data: {
-    type: DataTypes.JSON,
-    defaultValue: {},
-  },
-  createdAt: {
-    type: DataTypes.INTEGER,
-    defaultValue: () => Math.floor(Date.now() / 1000),
-  },
-  expiresAt: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
   }
-});
 
-module.exports = Notification;
+  Notification.init({
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
+    actorId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
+    messageId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Messages',
+        key: 'id'
+      }
+    },
+    type: {
+      type: DataTypes.ENUM('like', 'comment', 'friend_request', 'friend_accept', 'mention'),
+      allowNull: false
+    },
+    isRead: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
+  }, {
+    sequelize,
+    modelName: 'Notification',
+    tableName: 'Notifications',
+    timestamps: true
+  });
+
+  return Notification;
+};

@@ -1,44 +1,51 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
+const { Model, DataTypes } = require('sequelize');
 
-const PrivateMessage = sequelize.define('PrivateMessage', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  senderId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Users',
-      key: 'id',
+module.exports = (sequelize, DataTypes) => {
+  class PrivateMessage extends Model {
+    static associate(models) {
+      PrivateMessage.belongsTo(models.User, { 
+        foreignKey: 'senderId', 
+        as: 'sender'
+      });
+      
+      PrivateMessage.belongsTo(models.User, { 
+        foreignKey: 'receiverId', 
+        as: 'receiver'
+      });
     }
-  },
-  receiverId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'Users',
-      key: 'id',
-    }
-  },
-  content: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  isRead: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-  sentAt: {
-    type: DataTypes.INTEGER,
-    defaultValue: () => Math.floor(Date.now() / 1000),
-  },
-  readAt: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
   }
-});
 
-module.exports = PrivateMessage;
+  PrivateMessage.init({
+    senderId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
+    receiverId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
+    content: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    isRead: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
+  }, {
+    sequelize,
+    modelName: 'PrivateMessage',
+    tableName: 'PrivateMessages',
+    timestamps: true
+  });
+
+  return PrivateMessage;
+};

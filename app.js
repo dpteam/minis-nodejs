@@ -2,7 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 const path = require('path');
-const { sequelize } = require('./models');
+const db = require('./models');
+const { sequelize } = db;
 const indexRouter = require('./routes/index');
 const profileRouter = require('./routes/profile');
 const friendsRouter = require('./routes/friends');
@@ -32,6 +33,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Настройка стратегии Passport
+require('./config/passport')(passport);
+
 // Маршруты
 app.use('/', indexRouter);
 app.use('/profile', profileRouter);
@@ -47,7 +51,7 @@ app.listen(PORT, async () => {
     await sequelize.authenticate();
     console.log('Database connection established successfully.');
     
-    // Синхронизация моделей
+    // Просто синхронизируем модели без изменения существующих таблиц
     await sequelize.sync();
     console.log('Database models synchronized.');
     

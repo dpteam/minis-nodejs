@@ -6,7 +6,10 @@ router.get('/', (req, res) => {
   if (req.user) {
     return res.redirect('/');
   }
-  res.render('login', { title: 'Вход' });
+  res.render('login', { 
+    title: 'Вход',
+    error: null // Добавляем эту строку
+  });
 });
 
 router.post('/', passport.authenticate('local', {

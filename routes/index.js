@@ -19,6 +19,7 @@ router.get('/', async (req, res) => {
         },
         { 
           model: Like,
+          as: 'likes', // Добавляем псевдоним, который определен в ассоциации
           attributes: ['id', 'userId']
         }
       ],

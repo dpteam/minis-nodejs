@@ -28,6 +28,11 @@ router.get('/:id', async (req, res) => {
           model: User, 
           as: 'author',
           attributes: ['id', 'firstName', 'lastName', 'avatar']
+        },
+        { 
+          model: Like,
+          as: 'likes', // Добавляем псевдоним
+          attributes: ['id', 'userId']
         }
       ],
       order: [['postTime', 'DESC']],

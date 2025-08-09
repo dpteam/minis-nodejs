@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { PrivateMessage, User } = require('../models');
+const { Op } = require('sequelize');
 
 router.get('/', async (req, res) => {
   try {

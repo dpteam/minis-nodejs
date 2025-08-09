@@ -1,18 +1,23 @@
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class App extends Model {
+  class Group extends Model {
     static associate(models) {
-      App.belongsToMany(models.User, { 
-        through: 'UserApps', 
-        as: 'users',
-        foreignKey: 'appId',
+      Group.belongsToMany(models.User, { 
+        through: models.UserGroup, 
+        as: 'members',
+        foreignKey: 'groupId',
         otherKey: 'userId'
+      });
+      
+      Group.hasMany(models.Message, { 
+        foreignKey: 'groupId', 
+        as: 'messages'
       });
     }
   }
 
-  App.init({
+  Group.init({
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -21,13 +26,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       defaultValue: null
     },
-    icon: {
+    avatar: {
       type: DataTypes.STRING,
       defaultValue: null
-    },
-    url: {
-      type: DataTypes.STRING,
-      allowNull: false
     },
     creatorId: {
       type: DataTypes.INTEGER,
@@ -37,16 +38,16 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    isVerified: {
+    isPublic: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
+      defaultValue: true
     }
   }, {
     sequelize,
-    modelName: 'App',
-    tableName: 'Apps',
+    modelName: 'Group',
+    tableName: 'Groups',
     timestamps: true
   });
 
-  return App;
+  return Group;
 };

@@ -7,12 +7,23 @@ router.get('/', (req, res) => {
   if (req.user) {
     return res.redirect('/');
   }
-  res.render('register', { title: 'Регистрация' });
+  res.render('register', { 
+    title: 'Регистрация',
+    error: null // Добавляем эту строку
+  });
 });
 
 router.post('/', async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, confirmPassword } = req.body;
+    
+    // Проверяем совпадение паролей
+    if (password !== confirmPassword) {
+      return res.render('register', { 
+        title: 'Регистрация',
+        error: 'Пароли не совпадают'
+      });
+    }
     
     // Проверяем, существует ли пользователь с таким email
     const existingUser = await User.findOne({ where: { email } });
